@@ -10,18 +10,18 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 // Atoms
-import { ButtonComponent } from './atoms/button/button.component';
-import { InputComponent } from './atoms/input/input.component';
-import { LabelComponent } from './atoms/label/label.component';
+import { ButtonComponent } from './atoms/button/button';
+import { InputComponent } from './atoms/input/input';
+import { LabelComponent } from './atoms/label/label';
 
 // Molecules
-import { FormFieldComponent } from './molecules/form-field/form-field.component';
+import { FormFieldComponent } from './molecules/form-field/form-field';
 
 // Organisms
-import { LoginFormComponent } from './organisms/login-form/login-form.component';
+import { LoginFormComponent } from './organisms/login-form/login-form';
 
 // Templates
-import { AuthTemplateComponent } from './templates/auth-template/auth-template.component';
+import { AuthTemplateComponent } from './templates/auth-template/auth-template';
 
 @NgModule({
   declarations: [

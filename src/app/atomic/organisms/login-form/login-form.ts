@@ -3,24 +3,19 @@ import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-login-form',
-  templateUrl: './login-form.component.html',
-  styleUrls: ['./login-form.component.scss'],
+  standalone: false,
+  templateUrl: './login-form.html',
+  styleUrls: ['./login-form.scss'],
 })
 export class LoginFormComponent {
   @Input() form!: FormGroup;
-  @Input() submitLabel = 'Iniciar Sesión';
-  @Input() loading = false;
-  @Input() error?: string;
-
+  @Input() submitLabel = 'Ingresar';
   @Output() submitForm = new EventEmitter<void>();
   @Output() forgotPassword = new EventEmitter<void>();
 
-  onSubmit(): void {
-    if (this.form.valid) {
-      this.submitForm.emit();
-    } else {
-      this.form.markAllAsTouched();
-    }
+  onSubmit() {
+    if (this.form.valid) this.submitForm.emit();
+    else this.form.markAllAsTouched();
   }
 
   getControl(name: string): FormControl {
