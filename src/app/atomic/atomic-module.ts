@@ -1,40 +1,40 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
-
-// Angular Material Modules
 import { MatButtonModule } from '@angular/material/button';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-// Atoms
 import { ButtonComponent } from './atoms/button/button';
 import { InputComponent } from './atoms/input/input';
 import { LabelComponent } from './atoms/label/label';
-
-// Molecules
+//import { IconComponent } from './1_atoms/icon/icon';
 import { FormFieldComponent } from './molecules/form-field/form-field';
-
-// Organisms
 import { LoginFormComponent } from './organisms/login-form/login-form';
-
-// Templates
 import { AuthTemplateComponent } from './templates/auth-template/auth-template';
+import { DesignShowcaseComponent, DesignShowcase } from './pages/design-showcase/design-showcase';
+
+// Agregar solo para probar el sistema de diseño
+import { RouterModule, Routes } from '@angular/router';
+const atomicRoutes: Routes = [
+  {
+    // Segmento restante: 'pages/design-showcase'
+    path: 'pages/design-showcase',
+    component: DesignShowcaseComponent,
+  },
+];
 
 @NgModule({
   declarations: [
-    // Atoms
     ButtonComponent,
     InputComponent,
     LabelComponent,
-    // Molecules
     FormFieldComponent,
-    // Organisms
     LoginFormComponent,
-    // Templates
     AuthTemplateComponent,
+    DesignShowcaseComponent,
+    DesignShowcase,
   ],
   imports: [
     CommonModule,
@@ -43,16 +43,16 @@ import { AuthTemplateComponent } from './templates/auth-template/auth-template';
     MatInputModule,
     MatIconModule,
     MatFormFieldModule,
-    MatProgressSpinnerModule,
+    RouterModule.forChild(atomicRoutes), // Agregar solo para probar el sistema de diseño
   ],
   exports: [
-    // Exportamos todo para usar en otros módulos
     ButtonComponent,
     InputComponent,
     LabelComponent,
     FormFieldComponent,
     LoginFormComponent,
     AuthTemplateComponent,
+    DesignShowcaseComponent,
   ],
 })
 export class AtomicModule {}
