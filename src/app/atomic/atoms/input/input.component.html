@@ -1,27 +1,38 @@
 <mat-form-field appearance="outline" class="w-full">
-  <mat-label>{{ placeholder }}</mat-label>
-  <input matInput [type]="inputType" [formControl]="control" />
+  <mat-label>{{ placeholder() }}</mat-label>
+  <input matInput [type]="inputType()" [formControl]="control()" />
 
   <!-- Botón para mostrar/ocultar contraseña -->
-  <button
-    *ngIf="type === 'password'"
-    mat-icon-button
-    matSuffix
-    type="button"
-    (click)="togglePasswordVisibility()"
-  >
-    <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
-  </button>
+  @if (type() === 'password') {
+    <button
+      mat-icon-button
+      matSuffix
+      type="button"
+      (click)="togglePasswordVisibility()"
+    >
+      <mat-icon>{{ hidePassword() ? 'visibility_off' : 'visibility' }}</mat-icon>
+    </button>
+  }
 
   <!-- Icono genérico -->
-  <mat-icon *ngIf="icon && type !== 'password'" matSuffix>{{ icon }}</mat-icon>
+  @if (icon() && type() !== 'password') {
+    <mat-icon matSuffix>{{ icon() }}</mat-icon>
+  }
 
   <!-- Mensajes de error -->
-  <mat-error *ngIf="control?.invalid && control?.touched">
-    <span *ngIf="control?.errors?.['required']">Este campo es requerido</span>
-    <span *ngIf="control?.errors?.['email']">Email inválido</span>
-    <span *ngIf="control?.errors?.['minlength']">
-      Mínimo {{ control?.errors?.['minlength'].requiredLength }} caracteres
-    </span>
-  </mat-error>
+  @if (control()?.invalid && control()?.touched) {
+    <mat-error>
+      @if (control()?.errors?.['required']) {
+        <span>Este campo es requerido</span>
+      }
+      @if (control()?.errors?.['email']) {
+        <span>Email inválido</span>
+      }
+      @if (control()?.errors?.['minlength']) {
+        <span>
+          Mínimo {{ control()?.errors?.['minlength'].requiredLength }} caracteres
+        </span>
+      }
+    </mat-error>
+  }
 </mat-form-field>
