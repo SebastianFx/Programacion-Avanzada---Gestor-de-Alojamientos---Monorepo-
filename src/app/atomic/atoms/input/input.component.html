@@ -1,0 +1,27 @@
+<mat-form-field appearance="outline" class="w-full">
+  <mat-label>{{ placeholder }}</mat-label>
+  <input matInput [type]="inputType" [formControl]="control" />
+
+  <!-- Botón para mostrar/ocultar contraseña -->
+  <button
+    *ngIf="type === 'password'"
+    mat-icon-button
+    matSuffix
+    type="button"
+    (click)="togglePasswordVisibility()"
+  >
+    <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+  </button>
+
+  <!-- Icono genérico -->
+  <mat-icon *ngIf="icon && type !== 'password'" matSuffix>{{ icon }}</mat-icon>
+
+  <!-- Mensajes de error -->
+  <mat-error *ngIf="control?.invalid && control?.touched">
+    <span *ngIf="control?.errors?.['required']">Este campo es requerido</span>
+    <span *ngIf="control?.errors?.['email']">Email inválido</span>
+    <span *ngIf="control?.errors?.['minlength']">
+      Mínimo {{ control?.errors?.['minlength'].requiredLength }} caracteres
+    </span>
+  </mat-error>
+</mat-form-field>
