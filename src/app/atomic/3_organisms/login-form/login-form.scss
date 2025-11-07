@@ -1,3 +1,5 @@
+@use '../../../../styles/variables' as vars;
+
 .login-form {
   display: flex;
   flex-direction: column;
@@ -23,15 +25,71 @@
   text-align: center;
   cursor: pointer;
   margin-top: 0.5rem;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: vars.$gradient-primary;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
-  transition: all 0.3s ease;
-  font-weight: 500;
+  transition: vars.$transition-base;
+  font-weight: 600;
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  margin-left: auto;
+  margin-right: auto;
+
+  // Línea decorativa debajo del link
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: vars.$gradient-primary;
+    transition: width 0.3s ease;
+  }
 
   &:hover {
-    opacity: 0.8;
     transform: translateY(-2px);
+
+    &::after {
+      width: 100%;
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+// Animaciones de entrada para cada campo
+.login-form > * {
+  animation: fadeInUp 0.5s ease-out both;
+
+  &:nth-child(1) {
+    animation-delay: 0.1s;
+  }
+
+  &:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+
+  &:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+
+  &:nth-child(4) {
+    animation-delay: 0.4s;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }
