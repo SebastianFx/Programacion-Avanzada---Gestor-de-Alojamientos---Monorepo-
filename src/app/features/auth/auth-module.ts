@@ -3,11 +3,13 @@ import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing-module';
 import { Auth } from './auth';
+import { Login } from './pages/login/login';
 
 
 @NgModule({
   declarations: [
-    Auth
+    Auth,
+    Login
   ],
   imports: [
     CommonModule,
