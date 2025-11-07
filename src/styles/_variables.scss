@@ -1,0 +1,51 @@
+// ============================================
+// PALETA DE COLORES - SISTEMA DE ALOJAMIENTOS
+// ============================================
+
+// COLORES PRINCIPALES
+// ============================================
+$color-primary: #D9B777;        // Oro Claro - Botones principales, CTAs
+$color-secondary: #BF9765;      // Oro Oscuro - Botones secundarios, hover
+$color-tertiary: #8B6914;       // Oro Profundo - Acentos, estados activos
+
+// COLORES NEUTROS
+// ============================================
+$color-background: #F2F2F2;     // Gris Claro - Fondos de página
+$color-text-primary: #262626;   // Gris Oscuro - Texto principal
+$color-text-dark: #0D0D0D;      // Negro - Títulos principales
+$color-white: #FFFFFF;          // Blanco - Fondos de cards
+$color-gray-medium: #808080;    // Gris Medio - Texto secundario
+$color-gray-light: #E8E8E8;     // Gris Claro Plus - Bordes
+
+// COLORES DE ESTADO
+// ============================================
+$color-success: #2E8B57;        // Verde Bosque - Confirmaciones
+$color-error: #B22222;          // Rojo Fuego - Errores
+$color-warning: #D2691E;        // Naranja Chocolate - Advertencias
+$color-info: #4682B4;           // Azul Acero - Información
+
+// GRADIENTES
+// ============================================
+$gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
+$gradient-gold: linear-gradient(135deg, $color-tertiary 0%, $color-primary 100%);
+$gradient-elegant: linear-gradient(135deg, #BF9765 0%, #D9B777 50%, #8B6914 100%);
+
+// SOMBRAS
+// ============================================
+$shadow-sm: 0 2px 8px rgba(139, 105, 20, 0.1);
+$shadow-md: 0 4px 12px rgba(139, 105, 20, 0.15);
+$shadow-lg: 0 8px 24px rgba(139, 105, 20, 0.2);
+$shadow-xl: 0 20px 60px rgba(139, 105, 20, 0.25);
+
+// TRANSICIONES
+// ============================================
+$transition-base: all 0.3s ease;
+$transition-fast: all 0.2s ease;
+$transition-slow: all 0.5s ease;
+
+// RADIOS DE BORDE
+// ============================================
+$border-radius-sm: 0.5rem;
+$border-radius-md: 0.75rem;
+$border-radius-lg: 1rem;
+$border-radius-xl: 1.5rem;

@@ -1,4 +1,289 @@
+@use '@angular/material' as mat;
+@use './styles/variables' as vars;
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+// ============================================
+// CONFIGURACIÓN DEL TEMA DE ANGULAR MATERIAL
+// ============================================
+
+// Include Material core styles (must be included once)
+@include mat.core();
+
+// Definir la paleta personalizada dorada
+$gold-palette: (
+  50: #fef9f1,
+  100: #fef3e2,
+  200: #fde5c5,
+  300: #fbd7a7,
+  400: #eac587,
+  500: vars.$color-primary,
+  // #D9B777 - Color principal
+  600: vars.$color-secondary,
+  // #BF9765 - Color secundario
+  700: vars.$color-tertiary,
+  // #8B6914 - Color terciario
+  800: #705311,
+  900: #5a420e,
+  A100: #ffe8c8,
+  A200: #ffd89a,
+  A400: #ffc86c,
+  A700: #ffbd53,
+  contrast: (
+    50: vars.$color-text-dark,
+    100: vars.$color-text-dark,
+    200: vars.$color-text-dark,
+    300: vars.$color-text-dark,
+    400: vars.$color-text-dark,
+    500: vars.$color-white,
+    600: vars.$color-white,
+    700: vars.$color-white,
+    800: vars.$color-white,
+    900: vars.$color-white,
+    A100: vars.$color-text-dark,
+    A200: vars.$color-text-dark,
+    A400: vars.$color-text-dark,
+    A700: vars.$color-text-dark,
+  ),
+);
+
+// Crear tema con la paleta dorada
+$my-primary: mat.m2-define-palette($gold-palette, 500, 300, 700);
+$my-accent: mat.m2-define-palette($gold-palette, 600, 400, 800);
+$my-warn: mat.m2-define-palette(mat.$m2-red-palette);
+
+$my-theme: mat.m2-define-light-theme(
+  (
+    color: (
+      primary: $my-primary,
+      accent: $my-accent,
+      warn: $my-warn,
+    ),
+    typography: mat.m2-define-typography-config(),
+    density: 0,
+  )
+);
+
+// Aplicar el tema
+@include mat.all-component-themes($my-theme);
+
+// ============================================
+// ESTILOS GLOBALES
+// ============================================
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: vars.$color-background;
+  color: vars.$color-text-primary;
+  line-height: 1.6;
+}
+
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// ============================================
+// SCROLLBAR PERSONALIZADO
+// ============================================
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: vars.$color-gray-light;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: vars.$color-secondary;
+  border-radius: 10px;
+  border: 2px solid vars.$color-gray-light;
+
+  &:hover {
+    background: vars.$color-primary;
+  }
+}
+
+// ============================================
+// UTILIDADES DE ANIMACIÓN
+// ============================================
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+// Clases de utilidad para animaciones
+.fade-in {
+  animation: fadeIn 0.5s ease-out;
+}
+
+.slide-in-up {
+  animation: slideInUp 0.5s ease-out;
+}
+
+.slide-in-down {
+  animation: slideInDown 0.5s ease-out;
+}
+
+.slide-in-left {
+  animation: slideInLeft 0.5s ease-out;
+}
+
+.slide-in-right {
+  animation: slideInRight 0.5s ease-out;
+}
+
+// ============================================
+// PERSONALIZACIÓN DE ANGULAR MATERIAL
+// ============================================
+
+// Botones de Angular Material
+.mat-mdc-raised-button {
+  letter-spacing: 0.5px;
+  text-transform: none;
+  font-weight: 600;
+}
+
+// Form fields de Angular Material
+.mat-mdc-form-field {
+  .mat-mdc-form-field-subscript-wrapper {
+    margin-top: 0.25rem;
+  }
+}
+
+// Efectos de ripple personalizados
+.mat-ripple-element {
+  background-color: rgba(217, 183, 119, 0.2) !important;
+}
+
+// ============================================
+// UTILIDADES ADICIONALES
+// ============================================
+
+.text-primary {
+  color: vars.$color-primary;
+}
+
+.text-secondary {
+  color: vars.$color-secondary;
+}
+
+.text-tertiary {
+  color: vars.$color-tertiary;
+}
+
+.bg-primary {
+  background-color: vars.$color-primary;
+}
+
+.bg-secondary {
+  background-color: vars.$color-secondary;
+}
+
+.bg-gradient-primary {
+  background: vars.$gradient-primary;
+}
+
+.bg-gradient-gold {
+  background: vars.$gradient-gold;
+}
+
+.shadow-sm {
+  box-shadow: vars.$shadow-sm;
+}
+
+.shadow-md {
+  box-shadow: vars.$shadow-md;
+}
+
+.shadow-lg {
+  box-shadow: vars.$shadow-lg;
+}
+
+.shadow-xl {
+  box-shadow: vars.$shadow-xl;
+}
+
+// Transiciones suaves
+.transition-smooth {
+  transition: vars.$transition-base;
+}
+
+// ============================================
+// MODO RESPONSIVE
+// ============================================
+
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 480px) {
+  body {
+    font-size: 13px;
+  }
+}
