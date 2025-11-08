@@ -23,6 +23,12 @@ mat-form-field {
 
     // Estilos para el outline (borde)
     .mdc-text-field--outlined {
+      // CRÍTICO: Ocultar la división del notch
+      .mdc-notched-outline__notch {
+        border-right: none !important;
+        border-left: none !important;
+      }
+
       // Estado normal
       .mdc-notched-outline {
         .mdc-notched-outline__leading,
@@ -57,6 +63,12 @@ mat-form-field {
           }
         }
 
+        // CRÍTICO: Mantener oculta la división en focus
+        .mdc-notched-outline__notch {
+          border-right: none !important;
+          border-left: none !important;
+        }
+
         // Label en focus
         .mdc-floating-label--float-above {
           color: vars.$color-primary !important;
@@ -71,6 +83,12 @@ mat-form-field {
           .mdc-notched-outline__trailing {
             border-color: vars.$color-error !important;
           }
+        }
+
+        // CRÍTICO: Mantener oculta la división en error
+        .mdc-notched-outline__notch {
+          border-right: none !important;
+          border-left: none !important;
         }
 
         &:hover {
