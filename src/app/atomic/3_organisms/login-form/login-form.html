@@ -1,28 +1,23 @@
 <form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
   <app-form-field
     label="Correo electrónico"
-    placeholder="usuario@correo.com"
+    placeholder="Correo electrónico"
     type="email"
     icon="email"
-    [control]="getControl('username')">
+    [control]="getControl('username')"
+  >
   </app-form-field>
 
   <app-form-field
     label="Contraseña"
-    placeholder="Tu contraseña"
+    placeholder="Contraseña"
     type="password"
     icon="lock"
-    [control]="getControl('password')">
+    [control]="getControl('password')"
+  >
   </app-form-field>
 
-  <app-button
-    [label]="submitLabel"
-    color="primary"
-    type="submit"
-    icon="login">
-  </app-button>
+  <app-button [label]="submitLabel" color="primary" type="submit" icon="login"> </app-button>
 
-  <a (click)="forgotPassword.emit()" class="forgot-password-link">
-    ¿Olvidaste tu contraseña?
-  </a>
+  <a (click)="forgotPassword.emit()" class="forgot-password-link"> ¿Olvidaste tu contraseña? </a>
 </form>
