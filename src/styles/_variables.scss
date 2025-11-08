@@ -4,31 +4,31 @@
 
 // COLORES PRINCIPALES
 // ============================================
-$color-primary: #D9B777;        // Oro Claro - Botones principales, CTAs
-$color-secondary: #BF9765;      // Oro Oscuro - Botones secundarios, hover
-$color-tertiary: #8B6914;       // Oro Profundo - Acentos, estados activos
+$color-primary: #d9b777; // Oro Claro - Botones principales, CTAs
+$color-secondary: #bf9765; // Oro Oscuro - Botones secundarios, hover
+$color-tertiary: #8b6914; // Oro Profundo - Acentos, estados activos
 
 // COLORES NEUTROS
 // ============================================
-$color-background: #F2F2F2;     // Gris Claro - Fondos de página
-$color-text-primary: #262626;   // Gris Oscuro - Texto principal
-$color-text-dark: #0D0D0D;      // Negro - Títulos principales
-$color-white: #FFFFFF;          // Blanco - Fondos de cards
-$color-gray-medium: #808080;    // Gris Medio - Texto secundario
-$color-gray-light: #E8E8E8;     // Gris Claro Plus - Bordes
+$color-background: #f2f2f2; // Gris Claro - Fondos de página
+$color-text-primary: #262626; // Gris Oscuro - Texto principal
+$color-text-dark: #0d0d0d; // Negro - Títulos principales
+$color-white: #ffffff; // Blanco - Fondos de cards
+$color-gray-medium: #808080; // Gris Medio - Texto secundario
+$color-gray-light: #e8e8e8; // Gris Claro Plus - Bordes
 
 // COLORES DE ESTADO
 // ============================================
-$color-success: #2E8B57;        // Verde Bosque - Confirmaciones
-$color-error: #B22222;          // Rojo Fuego - Errores
-$color-warning: #D2691E;        // Naranja Chocolate - Advertencias
-$color-info: #4682B4;           // Azul Acero - Información
+$color-success: #2e8b57; // Verde Bosque - Confirmaciones
+$color-error: #b22222; // Rojo Fuego - Errores
+$color-warning: #d2691e; // Naranja Chocolate - Advertencias
+$color-info: #4682b4; // Azul Acero - Información
 
 // GRADIENTES
 // ============================================
 $gradient-primary: linear-gradient(135deg, $color-primary 0%, $color-secondary 100%);
 $gradient-gold: linear-gradient(135deg, $color-tertiary 0%, $color-primary 100%);
-$gradient-elegant: linear-gradient(135deg, #BF9765 0%, #D9B777 50%, #8B6914 100%);
+$gradient-elegant: linear-gradient(135deg, #bf9765 0%, #d9b777 50%, #8b6914 100%);
 
 // SOMBRAS
 // ============================================
