@@ -7,6 +7,12 @@
 .mb-4 {
   margin-bottom: 1rem;
   animation: fieldSlideIn 0.4s ease-out;
+
+  // Espaciado entre label y input
+  app-label {
+    display: block;
+    margin-bottom: 0.5rem;
+  }
 }
 
 @keyframes fieldSlideIn {
@@ -28,6 +34,10 @@
   &:focus-within {
     app-label {
       color: vars.$color-primary;
+
+      ::ng-deep label {
+        color: vars.$color-primary;
+      }
     }
   }
 }

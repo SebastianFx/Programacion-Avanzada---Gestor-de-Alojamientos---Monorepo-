@@ -21,18 +21,27 @@ mat-form-field {
       margin-top: 0.25rem;
     }
 
-    // Estilos para el outline (borde)
+    // Estilos para el outline (borde) - SIN LABEL INTERNO
     .mdc-text-field--outlined {
-      // CRÍTICO: Ocultar la división del notch
+      // Ocultar completamente el notch ya que no hay label
       .mdc-notched-outline__notch {
+        display: none;
+      }
+
+      // Solo mantener leading y trailing sin divisiones
+      .mdc-notched-outline__leading {
         border-right: none !important;
+        border-radius: vars.$border-radius-md 0 0 vars.$border-radius-md !important;
+      }
+
+      .mdc-notched-outline__trailing {
         border-left: none !important;
+        border-radius: 0 vars.$border-radius-md vars.$border-radius-md 0 !important;
       }
 
       // Estado normal
       .mdc-notched-outline {
         .mdc-notched-outline__leading,
-        .mdc-notched-outline__notch,
         .mdc-notched-outline__trailing {
           border-color: vars.$color-gray-light;
           transition: vars.$transition-base;
@@ -43,7 +52,6 @@ mat-form-field {
       &:hover:not(.mdc-text-field--focused):not(.mdc-text-field--disabled) {
         .mdc-notched-outline {
           .mdc-notched-outline__leading,
-          .mdc-notched-outline__notch,
           .mdc-notched-outline__trailing {
             border-color: vars.$color-secondary;
             box-shadow: 0 0 0 1px rgba(191, 151, 101, 0.2);
@@ -55,23 +63,11 @@ mat-form-field {
       &.mdc-text-field--focused {
         .mdc-notched-outline {
           .mdc-notched-outline__leading,
-          .mdc-notched-outline__notch,
           .mdc-notched-outline__trailing {
             border-color: vars.$color-primary !important;
             border-width: 2px;
             box-shadow: 0 0 0 3px rgba(217, 183, 119, 0.15);
           }
-        }
-
-        // CRÍTICO: Mantener oculta la división en focus
-        .mdc-notched-outline__notch {
-          border-right: none !important;
-          border-left: none !important;
-        }
-
-        // Label en focus
-        .mdc-floating-label--float-above {
-          color: vars.$color-primary !important;
         }
       }
 
@@ -79,35 +75,20 @@ mat-form-field {
       &.mdc-text-field--invalid {
         .mdc-notched-outline {
           .mdc-notched-outline__leading,
-          .mdc-notched-outline__notch,
           .mdc-notched-outline__trailing {
             border-color: vars.$color-error !important;
           }
         }
 
-        // CRÍTICO: Mantener oculta la división en error
-        .mdc-notched-outline__notch {
-          border-right: none !important;
-          border-left: none !important;
-        }
-
         &:hover {
           .mdc-notched-outline {
             .mdc-notched-outline__leading,
-            .mdc-notched-outline__notch,
             .mdc-notched-outline__trailing {
               box-shadow: 0 0 0 1px rgba(178, 34, 34, 0.2);
             }
           }
         }
       }
-    }
-
-    // Estilos del label
-    .mdc-floating-label {
-      color: vars.$color-gray-medium;
-      transition: vars.$transition-base;
-      font-weight: 500;
     }
 
     // Mensajes de error
@@ -143,6 +124,7 @@ mat-form-field {
       transition: vars.$transition-base;
       color: vars.$color-text-primary;
       font-weight: 500;
+      //padding: 1rem;
 
       &::placeholder {
         color: vars.$color-gray-medium;
@@ -151,6 +133,10 @@ mat-form-field {
 
       &:focus {
         color: vars.$color-text-dark;
+
+        &::placeholder {
+          opacity: 0.5;
+        }
       }
     }
 
