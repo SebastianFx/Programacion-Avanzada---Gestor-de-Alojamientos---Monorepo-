@@ -1,0 +1,33 @@
+{
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "Sign In",
+      "SUBTITLE": "Access with your credentials",
+      "EMAIL": "Email",
+      "PASSWORD": "Password",
+      "SUBMIT": "Sign In",
+      "FORGOT": "Forgot your password?",
+      "ERROR": "Invalid email or password"
+    },
+    "REGISTER": {
+      "TITLE": "Register",
+      "SUBTITLE": "Create your account",
+      "NAME": "Name",
+      "LASTNAME": "Last Name",
+      "PHONE": "Phone",
+      "EMAIL": "Email",
+      "PASSWORD": "Password",
+      "CONFIRM_PASSWORD": "Confirm Password",
+      "SUBMIT": "Register"
+    }
+  },
+  "COMMON": {
+    "LOADING": "Loading...",
+    "SAVE": "Save",
+    "CANCEL": "Cancel",
+    "DELETE": "Delete",
+    "EDIT": "Edit",
+    "SEARCH": "Search",
+    "CLOSE": "Close"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "Iniciar Sesión",
+      "SUBTITLE": "Accede con tus credenciales",
+      "EMAIL": "Correo electrónico",
+      "PASSWORD": "Contraseña",
+      "SUBMIT": "Ingresar",
+      "FORGOT": "¿Olvidaste tu contraseña?",
+      "ERROR": "Usuario o contraseña incorrectos"
+    },
+    "REGISTER": {
+      "TITLE": "Registro",
+      "SUBTITLE": "Crea tu cuenta",
+      "NAME": "Nombre",
+      "LASTNAME": "Apellido",
+      "PHONE": "Teléfono",
+      "EMAIL": "Correo electrónico",
+      "PASSWORD": "Contraseña",
+      "CONFIRM_PASSWORD": "Confirmar contraseña",
+      "SUBMIT": "Registrarse"
+    }
+  },
+  "COMMON": {
+    "LOADING": "Cargando...",
+    "SAVE": "Guardar",
+    "CANCEL": "Cancelar",
+    "DELETE": "Eliminar",
+    "EDIT": "Editar",
+    "SEARCH": "Buscar",
+    "CLOSE": "Cerrar"
+  }
+}

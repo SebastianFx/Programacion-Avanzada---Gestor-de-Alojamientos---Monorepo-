@@ -1,1 +1,18 @@
-<p>login works!</p>
+<app-auth-template
+  [title]="'AUTH.LOGIN.TITLE' | translate"
+  [subtitle]="'AUTH.LOGIN.SUBTITLE' | translate"
+>
+  <app-login-form
+    [form]="form"
+    [isLoading]="isLoading"
+    [submitLabel]="'AUTH.LOGIN.SUBMIT' | translate"
+    [forgotLabel]="'AUTH.LOGIN.FORGOT' | translate"
+    (submitForm)="onSubmit()"
+    (forgotPassword)="onForgotPassword()"
+  >
+  </app-login-form>
+
+  <div *ngIf="error" class="mt-4 p-3 bg-red-100 border border-red-400 text-red-700 rounded">
+    {{ 'AUTH.LOGIN.ERROR' | translate }}
+  </div>
+</app-auth-template>
