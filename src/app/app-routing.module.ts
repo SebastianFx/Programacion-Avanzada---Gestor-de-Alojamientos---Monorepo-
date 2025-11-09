@@ -12,12 +12,12 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
-  {
-    //path: 'dashboard',
-    //canActivate: [AuthGuard],
-    //loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
-    // Nota: Este módulo debe ser creado posteriormente
-  },
+  //{
+  //path: 'dashboard',
+  //canActivate: [AuthGuard],
+  //loadChildren: () => import('./features/dashboard/dashboard.module').then(m => m.DashboardModule)
+  // Nota: Este módulo debe ser creado posteriormente
+  //},
   {
     path: '**',
     redirectTo: '/auth/login',
