@@ -1,0 +1,51 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="login-form">
+  <div *ngIf="errorMessage" class="alert alert-error">
+    <app-icon name="alert-circle" [size]="20"></app-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <app-form-field
+    label="Correo Electrónico"
+    [control]="emailControl"
+    type="email"
+    placeholder="tu@email.com"
+    id="email"
+    [required]="true"
+    [errorMessages]="{
+      required: 'El correo es requerido',
+      email: 'Ingresa un correo válido'
+    }">
+  </app-form-field>
+
+  <app-form-field
+    label="Contraseña"
+    [control]="passwordControl"
+    type="password"
+    placeholder="••••••••"
+    id="password"
+    [required]="true"
+    [errorMessages]="{
+      required: 'La contraseña es requerida',
+      minlength: 'Mínimo 6 caracteres'
+    }">
+  </app-form-field>
+
+  <div class="form-actions">
+    <button
+      type="button"
+      class="forgot-password-link"
+      (click)="onForgotPassword()">
+      ¿Olvidaste tu contraseña?
+    </button>
+  </div>
+
+  <app-button
+    type="submit"
+    variant="primary"
+    size="large"
+    [fullWidth]="true"
+    [loading]="loading"
+    [disabled]="form.invalid || loading">
+    {{ loading ? 'Iniciando sesión...' : 'Iniciar Sesión' }}
+  </app-button>
+</form>
