@@ -8,13 +8,12 @@
   transition: all 0.2s ease;
   cursor: pointer;
   border: 2px solid transparent;
-  font-family: inherit;
+  font-family: 'Inter', sans-serif;
   white-space: nowrap;
 
   &:focus {
     outline: none;
-    ring: 2px solid;
-    ring-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(217, 183, 119, 0.3); // 🎨 Focus dorado
   }
 
   // Sizes
@@ -36,61 +35,68 @@
     line-height: 1.75rem;
   }
 
-  // Variants
   &-primary {
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    background: linear-gradient(135deg, #d9b777 0%, #bf9765 100%);
     color: white;
     border-color: transparent;
 
     &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #bf9765 0%, #8b6914 100%);
       transform: translateY(-1px);
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 15px -3px rgba(139, 105, 20, 0.2);
     }
 
     &:active:not(:disabled) {
       transform: translateY(0);
+      background: linear-gradient(135deg, #8b6914 0%, #bf9765 100%);
     }
   }
 
   &-secondary {
-    background-color: #f3f4f6;
-    color: #374151;
-    border-color: #e5e7eb;
+    background-color: #bf9765;
+    color: white;
+    border-color: #bf9765;
 
     &:hover:not(:disabled) {
-      background-color: #e5e7eb;
+      background-color: #d9b777;
     }
 
     &:active:not(:disabled) {
-      background-color: #d1d5db;
+      background-color: #8b6914;
     }
   }
 
   &-outline {
     background-color: transparent;
-    color: #667eea;
-    border-color: #667eea;
+    color: #d9b777;
+    border-color: #d9b777;
 
     &:hover:not(:disabled) {
-      background-color: #f5f3ff;
+      background-color: rgba(217, 183, 119, 0.1);
+      border-color: #bf9765;
+      color: #bf9765;
     }
 
     &:active:not(:disabled) {
-      background-color: #ede9fe;
+      background-color: rgba(217, 183, 119, 0.2);
+      border-color: #8b6914;
+      color: #8b6914;
     }
   }
 
   &-text {
     background-color: transparent;
-    color: #667eea;
+    color: #d9b777;
     border-color: transparent;
 
     &:hover:not(:disabled) {
-      background-color: #f5f3ff;
+      background-color: rgba(217, 183, 119, 0.1);
+      color: #bf9765;
     }
 
     &:active:not(:disabled) {
-      background-color: #ede9fe;
+      background-color: rgba(217, 183, 119, 0.2);
+      color: #8b6914;
     }
   }
 

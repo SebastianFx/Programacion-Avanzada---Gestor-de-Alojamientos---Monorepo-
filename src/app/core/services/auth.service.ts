@@ -8,7 +8,7 @@ import { AuthResponse, User } from '../models/auth.model';
   providedIn: 'root',
 })
 export class AuthService {
-  private baseUrl = 'http://localhost:8080/alojamiento/api/auth'; // 🔴 CAMBIAR SEGÚN TU BACKEND
+  private baseUrl = 'http://localhost:8080/alojamiento/api/auth'; // RUTA DEL BACKEND
 
   private currentUserSubject = new BehaviorSubject<User | null>(null);
   public currentUser$ = this.currentUserSubject.asObservable();

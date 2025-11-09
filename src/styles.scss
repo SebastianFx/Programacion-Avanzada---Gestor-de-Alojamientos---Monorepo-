@@ -12,7 +12,7 @@
 // Include Material core styles (must be included once)
 @include mat.core();
 
-// Definir la paleta personalizada dorada
+// Definir la paleta personalizada dorada según documento de diseño
 $gold-palette: (
   50: #fef9f1,
   100: #fef3e2,
@@ -70,7 +70,7 @@ $my-theme: mat.m2-define-light-theme(
 @include mat.all-component-themes($my-theme);
 
 // ============================================
-// ESTILOS GLOBALES
+// ESTILOS GLOBALES SEGÚN DOCUMENTO DE DISEÑO
 // ============================================
 
 * {
@@ -82,7 +82,8 @@ $my-theme: mat.m2-define-light-theme(
 html,
 body {
   height: 100%;
-  font-family: 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  // TIPOGRAFÍA: Inter para UI
+  font-family: 'Inter', 'Roboto', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   background-color: vars.$color-background;
   color: vars.$color-text-primary;
   line-height: 1.6;
@@ -92,10 +93,64 @@ body {
   margin: 0;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  // Body base: 16px, Inter 400
+  font-size: 16px;
+  font-weight: 400;
 }
 
 // ============================================
-// SCROLLBAR PERSONALIZADO
+// TIPOGRAFÍA SEGÚN DOCUMENTO DE DISEÑO
+// ============================================
+
+// Títulos usan Poppins
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: 'Poppins', sans-serif;
+  color: vars.$color-text-dark;
+  margin: 0;
+}
+
+// H1 — 32/40 px, Poppins 700, #0D0D0D
+h1 {
+  font-size: 2rem; // 32px
+  line-height: 2.5rem; // 40px
+  font-weight: 700;
+}
+
+// H2 — 28/36 px, Poppins 600, #0D0D0D
+h2 {
+  font-size: 1.75rem; // 28px
+  line-height: 2.25rem; // 36px
+  font-weight: 600;
+}
+
+// H3 — 22/30 px, Poppins 600, #0D0D0D
+h3 {
+  font-size: 1.375rem; // 22px
+  line-height: 1.875rem; // 30px
+  font-weight: 600;
+}
+
+// H4 — 18/26 px, Poppins 500, #0D0D0D
+h4 {
+  font-size: 1.125rem; // 18px
+  line-height: 1.625rem; // 26px
+  font-weight: 500;
+}
+
+// Texto de cuerpo (Inter)
+p {
+  font-family: 'Inter', sans-serif;
+  color: vars.$color-text-primary;
+  margin: 0;
+}
+
+// ============================================
+// SCROLLBAR PERSONALIZADO CON COLORES DORADOS
 // ============================================
 
 ::-webkit-scrollbar {
@@ -200,27 +255,30 @@ body {
 // PERSONALIZACIÓN DE ANGULAR MATERIAL
 // ============================================
 
-// Botones de Angular Material
+// Botones de Angular Material con colores dorados
 .mat-mdc-raised-button {
   letter-spacing: 0.5px;
   text-transform: none;
   font-weight: 600;
+  font-family: 'Inter', sans-serif;
 }
 
 // Form fields de Angular Material
 .mat-mdc-form-field {
+  font-family: 'Inter', sans-serif;
+
   .mat-mdc-form-field-subscript-wrapper {
     margin-top: 0.25rem;
   }
 }
 
-// Efectos de ripple personalizados
+// Efectos de ripple personalizados con colores dorados
 .mat-ripple-element {
   background-color: rgba(217, 183, 119, 0.2) !important;
 }
 
 // ============================================
-// UTILIDADES ADICIONALES
+// UTILIDADES ADICIONALES (COLORES DORADOS)
 // ============================================
 
 .text-primary {
@@ -280,10 +338,25 @@ body {
   body {
     font-size: 14px;
   }
+
+  h1 {
+    font-size: 1.5rem; // 24px
+    line-height: 2rem; // 32px
+  }
+
+  h2 {
+    font-size: 1.375rem; // 22px
+    line-height: 1.875rem; // 30px
+  }
 }
 
 @media (max-width: 480px) {
   body {
     font-size: 13px;
+  }
+
+  h1 {
+    font-size: 1.25rem; // 20px
+    line-height: 1.75rem; // 28px
   }
 }
