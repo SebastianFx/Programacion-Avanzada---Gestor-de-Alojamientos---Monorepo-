@@ -10,63 +10,63 @@
   padding: 0.625rem 1rem;
   font-size: 1rem;
   line-height: 1.5rem;
-  color: #111827;
+  color: #0d0d0d;
   background-color: white;
-  border: 2px solid #d1d5db;
+  border: 2px solid #e8e8e8;
   border-radius: 0.5rem;
   transition: all 0.2s ease;
-  font-family: inherit;
+  font-family: 'Inter', sans-serif;
 
   &::placeholder {
-    color: #9ca3af;
+    color: #808080;
   }
 
   &:hover:not(:disabled):not(:focus) {
-    border-color: #9ca3af;
+    border-color: #bf9765;
   }
 
   &:focus {
     outline: none;
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #d9b777;
+    box-shadow: 0 0 0 3px rgba(217, 183, 119, 0.15); // Sombra dorada suave
   }
 
   &-focused {
-    border-color: #667eea;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+    border-color: #d9b777;
+    box-shadow: 0 0 0 3px rgba(217, 183, 119, 0.15);
   }
 
   &-error {
-    border-color: #ef4444;
+    border-color: #b22222;
 
     &:focus {
-      border-color: #ef4444;
-      box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+      border-color: #b22222;
+      box-shadow: 0 0 0 3px rgba(178, 34, 34, 0.15);
     }
   }
 
   &-success {
-    border-color: #10b981;
+    border-color: #2e8b57;
 
     &:focus {
-      border-color: #10b981;
-      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+      border-color: #2e8b57;
+      box-shadow: 0 0 0 3px rgba(46, 139, 87, 0.15);
     }
   }
 
   &-disabled {
-    background-color: #f3f4f6;
-    color: #9ca3af;
+    background-color: #f2f2f2;
+    color: #808080;
     cursor: not-allowed;
 
     &::placeholder {
-      color: #d1d5db;
+      color: #e8e8e8;
     }
   }
 
   &:disabled {
-    background-color: #f3f4f6;
-    color: #9ca3af;
+    background-color: #f2f2f2;
+    color: #808080;
     cursor: not-allowed;
   }
 }
@@ -83,7 +83,7 @@
   transform: translateY(-50%);
   background: none;
   border: none;
-  color: #6b7280;
+  color: #808080;
   cursor: pointer;
   padding: 0.25rem;
   display: flex;
@@ -92,12 +92,12 @@
   transition: color 0.2s ease;
 
   &:hover:not(:disabled) {
-    color: #374151;
+    color: #bf9765;
   }
 
   &:focus {
     outline: none;
-    color: #667eea;
+    color: #d9b777;
   }
 
   &:disabled {
