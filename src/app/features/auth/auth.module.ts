@@ -1,33 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule, Routes } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AtomicModule } from '../../atomic/atomic.module';
+import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './pages/login/login.component';
-
-const routes: Routes = [
-  {
-    path: '',
-    redirectTo: 'login',
-    pathMatch: 'full'
-  },
-  {
-    path: 'login',
-    component: LoginComponent
-  }
-  // Aquí puedes agregar más rutas como register, forgot-password, etc.
-];
+import { RegisterComponent } from './pages/register/register.component';
 
 @NgModule({
-  declarations: [
-    LoginComponent
-  ],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    AtomicModule,
-    RouterModule.forChild(routes)
-  ]
+  declarations: [LoginComponent, RegisterComponent],
+  imports: [CommonModule, ReactiveFormsModule, AtomicModule, AuthRoutingModule],
 })
-export class AuthModule { }
+export class AuthModule {}
