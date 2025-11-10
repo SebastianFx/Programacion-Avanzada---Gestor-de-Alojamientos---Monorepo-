@@ -10,9 +10,11 @@ import { IconComponent } from './atoms/icon/icon.component';
 
 // Molecules
 import { FormFieldComponent } from './molecules/form-field/form-field.component';
+import { ImageUploadComponent } from './molecules/image-upload/image-upload.component'; // ⬅️ NUEVO
 
 // Organisms
 import { LoginFormComponent } from './organisms/login-form/login-form.component';
+import { RegisterFormComponent } from './organisms/register-form/register-form.component';
 
 const ATOMIC_COMPONENTS = [
   // Atoms
@@ -22,17 +24,15 @@ const ATOMIC_COMPONENTS = [
   IconComponent,
   // Molecules
   FormFieldComponent,
+  ImageUploadComponent,
   // Organisms
-  LoginFormComponent
+  LoginFormComponent,
+  RegisterFormComponent,
 ];
 
 @NgModule({
   declarations: [...ATOMIC_COMPONENTS],
-  imports: [
-    CommonModule,
-    ReactiveFormsModule,
-    FormsModule
-  ],
-  exports: [...ATOMIC_COMPONENTS]
+  imports: [CommonModule, ReactiveFormsModule, FormsModule],
+  exports: [...ATOMIC_COMPONENTS],
 })
-export class AtomicModule { }
+export class AtomicModule {}
