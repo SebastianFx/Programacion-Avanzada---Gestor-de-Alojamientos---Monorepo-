@@ -1,0 +1,74 @@
+<nav class="navbar" [class.navbar--scrolled]="isScrolled">
+  <div class="navbar__container">
+    <!-- Logo -->
+    <div class="navbar__logo" (click)="navigateTo('/home')">
+      <svg class="navbar__logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+        <polyline points="9 22 9 12 15 12 15 22"/>
+      </svg>
+      <span class="navbar__logo-text">Alojamientos</span>
+    </div>
+
+    <!-- Navigation Links (Desktop) -->
+    <div class="navbar__links">
+      <a class="navbar__link" (click)="navigateTo('/home')">Inicio</a>
+      <a class="navbar__link" (click)="navigateTo('/accommodations')">Alojamientos</a>
+      <a class="navbar__link" (click)="navigateTo('/about')">Nosotros</a>
+      <a class="navbar__link" (click)="navigateTo('/contact')">Contacto</a>
+    </div>
+
+    <!-- Auth Buttons (Desktop) -->
+    <div class="navbar__actions">
+      <button class="navbar__button navbar__button--secondary" (click)="onLogin()">
+        Iniciar Sesión
+      </button>
+      <button class="navbar__button navbar__button--primary" (click)="onRegister()">
+        Registrarse
+      </button>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button 
+      class="navbar__mobile-toggle" 
+      (click)="toggleMobileMenu()"
+      [attr.aria-label]="isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'"
+      [attr.aria-expanded]="isMobileMenuOpen"
+    >
+      <svg *ngIf="!isMobileMenuOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="3" y1="12" x2="21" y2="12"/>
+        <line x1="3" y1="6" x2="21" y2="6"/>
+        <line x1="3" y1="18" x2="21" y2="18"/>
+      </svg>
+      <svg *ngIf="isMobileMenuOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <line x1="18" y1="6" x2="6" y2="18"/>
+        <line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div class="navbar__mobile-menu" [class.navbar__mobile-menu--open]="isMobileMenuOpen">
+    <div class="navbar__mobile-links">
+      <a class="navbar__mobile-link" (click)="navigateTo('/home')">Inicio</a>
+      <a class="navbar__mobile-link" (click)="navigateTo('/accommodations')">Alojamientos</a>
+      <a class="navbar__mobile-link" (click)="navigateTo('/about')">Nosotros</a>
+      <a class="navbar__mobile-link" (click)="navigateTo('/contact')">Contacto</a>
+    </div>
+
+    <div class="navbar__mobile-actions">
+      <button class="navbar__mobile-button navbar__mobile-button--secondary" (click)="onLogin()">
+        Iniciar Sesión
+      </button>
+      <button class="navbar__mobile-button navbar__mobile-button--primary" (click)="onRegister()">
+        Registrarse
+      </button>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div 
+    class="navbar__overlay" 
+    [class.navbar__overlay--visible]="isMobileMenuOpen"
+    (click)="closeMobileMenu()"
+  ></div>
+</nav>

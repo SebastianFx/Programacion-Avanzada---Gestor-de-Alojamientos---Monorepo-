@@ -1,0 +1,248 @@
+@use '../../../../styles/variables' as vars;
+
+.hero {
+  position: relative;
+  min-height: calc(100vh - 5rem);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  padding: 6rem 2rem 3rem;
+
+  @media (max-width: 768px) {
+    min-height: calc(100vh - 4rem);
+    padding: 5rem 1.5rem 2rem;
+  }
+
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    animation: slowZoom 20s ease-in-out infinite alternate;
+  }
+
+  &__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(13, 13, 13, 0.7) 0%,
+      rgba(139, 105, 20, 0.6) 50%,
+      rgba(217, 183, 119, 0.5) 100%
+    );
+  }
+
+  &__container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 3rem;
+
+    @media (max-width: 768px) {
+      gap: 2rem;
+    }
+  }
+
+  &__text {
+    text-align: center;
+    max-width: 800px;
+  }
+
+  &__title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 700;
+    line-height: 1.2;
+    color: vars.$color-white;
+    margin: 0 0 1.5rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    animation: fadeInUp 0.8s ease-out;
+
+    @media (max-width: 768px) {
+      margin: 0 0 1rem;
+    }
+  }
+
+  &__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    line-height: 1.7;
+    color: rgba(255, 255, 255, 0.95);
+    margin: 0;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+  }
+
+  &__search {
+    width: 100%;
+    max-width: 900px;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  &__cta {
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+  }
+
+  &__button {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 2.5rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 1.125rem;
+    font-weight: 600;
+    color: vars.$color-text-dark;
+    background: vars.$color-white;
+    border: none;
+    border-radius: vars.$border-radius-lg;
+    cursor: pointer;
+    transition: vars.$transition-base;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+
+    &:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.3);
+      background: vars.$color-background;
+    }
+
+    &:active {
+      transform: translateY(-2px);
+    }
+
+    @media (max-width: 640px) {
+      padding: 0.875rem 2rem;
+      font-size: 1rem;
+    }
+  }
+
+  &__button-icon {
+    width: 1.25rem;
+    height: 1.25rem;
+    transition: vars.$transition-fast;
+
+    .hero__button:hover & {
+      transform: translateX(4px);
+    }
+  }
+
+  &__stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    border-radius: vars.$border-radius-xl;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+
+    @media (max-width: 768px) {
+      gap: 1.5rem;
+      padding: 1.5rem;
+    }
+
+    @media (max-width: 480px) {
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      padding: 1.25rem;
+    }
+  }
+
+  &__stat {
+    text-align: center;
+  }
+
+  &__stat-value {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2rem;
+    font-weight: 700;
+    color: vars.$color-white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+
+    @media (max-width: 768px) {
+      font-size: 1.75rem;
+    }
+  }
+
+  &__stat-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.875rem;
+    color: rgba(255, 255, 255, 0.9);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-top: 0.5rem;
+  }
+
+  &__scroll-indicator {
+    position: absolute;
+    bottom: 2rem;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 2rem;
+    height: 2rem;
+    color: vars.$color-white;
+    animation: bounce 2s infinite;
+    opacity: 0.8;
+
+    svg {
+      width: 100%;
+      height: 100%;
+    }
+
+    @media (max-width: 768px) {
+      bottom: 1.5rem;
+      width: 1.75rem;
+      height: 1.75rem;
+    }
+  }
+
+  // Animations
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateX(-50%) translateY(0);
+    }
+    40% {
+      transform: translateX(-50%) translateY(-10px);
+    }
+    60% {
+      transform: translateX(-50%) translateY(-5px);
+    }
+  }
+
+  @keyframes slowZoom {
+    from {
+      transform: scale(1);
+    }
+    to {
+      transform: scale(1.1);
+    }
+  }
+}

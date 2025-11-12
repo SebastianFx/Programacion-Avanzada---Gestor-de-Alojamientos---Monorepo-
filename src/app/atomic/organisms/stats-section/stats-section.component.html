@@ -1,0 +1,27 @@
+<section class="stats-section">
+  <div class="stats-section__container">
+    <!-- Header -->
+    <div class="stats-section__header">
+      <h2 class="stats-section__title">Números Que Nos Respaldan</h2>
+      <p class="stats-section__subtitle">
+        Nuestra plataforma en crecimiento constante
+      </p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="stats-section__loading">
+      <div class="stats-section__spinner"></div>
+    </div>
+
+    <!-- Stats Grid -->
+    <div *ngIf="!isLoading && stats.length > 0" class="stats-section__grid">
+      <app-stat-card
+        *ngFor="let stat of stats"
+        [value]="stat.value"
+        [label]="stat.label"
+        [icon]="stat.icon"
+        [suffix]="stat.suffix || ''"
+      ></app-stat-card>
+    </div>
+  </div>
+</section>

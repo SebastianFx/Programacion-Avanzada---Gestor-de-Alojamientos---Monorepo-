@@ -1,0 +1,29 @@
+<section class="testimonials-section">
+  <div class="testimonials-section__container">
+    <!-- Header -->
+    <div class="testimonials-section__header">
+      <h2 class="testimonials-section__title">Lo Que Dicen Nuestros Huéspedes</h2>
+      <p class="testimonials-section__subtitle">
+        Experiencias reales de personas que han confiado en nosotros
+      </p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="testimonials-section__loading">
+      <div class="testimonials-section__spinner"></div>
+    </div>
+
+    <!-- Testimonials Grid -->
+    <div *ngIf="!isLoading && testimonials.length > 0" class="testimonials-section__grid">
+      <app-testimonial-card
+        *ngFor="let testimonial of testimonials"
+        [testimonial]="testimonial"
+      ></app-testimonial-card>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && testimonials.length === 0" class="testimonials-section__empty">
+      <p>No hay testimonios disponibles en este momento.</p>
+    </div>
+  </div>
+</section>

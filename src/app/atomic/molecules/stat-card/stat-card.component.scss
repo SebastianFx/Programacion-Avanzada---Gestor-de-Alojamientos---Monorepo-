@@ -1,0 +1,117 @@
+@use '../../../../styles/variables' as vars;
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 2rem 1.5rem;
+  background: vars.$color-white;
+  border-radius: vars.$border-radius-lg;
+  box-shadow: vars.$shadow-sm;
+  transition: vars.$transition-base;
+  height: 100%;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: vars.$shadow-md;
+
+    .stat-card__icon-container {
+      transform: scale(1.1) rotate(5deg);
+    }
+  }
+
+  &__icon-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 3.5rem;
+    height: 3.5rem;
+    background: vars.$gradient-primary;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    transition: vars.$transition-base;
+  }
+
+  &__icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    color: vars.$color-white;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &__value {
+    font-family: 'Poppins', sans-serif;
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+    color: vars.$color-text-dark;
+    background: vars.$gradient-elegant;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  &__suffix {
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-left: 0.25rem;
+  }
+
+  &__label {
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.5;
+    color: vars.$color-text-primary;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+
+  // Responsive
+  @media (max-width: 768px) {
+    padding: 1.5rem 1rem;
+
+    &__icon-container {
+      width: 3rem;
+      height: 3rem;
+      margin-bottom: 0.75rem;
+    }
+
+    &__icon {
+      width: 1.5rem;
+      height: 1.5rem;
+    }
+
+    &__value {
+      font-size: 2rem;
+    }
+
+    &__suffix {
+      font-size: 1.25rem;
+    }
+
+    &__label {
+      font-size: 0.875rem;
+    }
+  }
+
+  @media (max-width: 640px) {
+    &__value {
+      font-size: 1.75rem;
+    }
+
+    &__suffix {
+      font-size: 1.125rem;
+    }
+
+    &__label {
+      font-size: 0.8125rem;
+    }
+  }
+}
