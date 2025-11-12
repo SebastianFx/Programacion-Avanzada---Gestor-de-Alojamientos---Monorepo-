@@ -1,0 +1,56 @@
+@use '../../../../styles/variables' as vars;
+
+.price-tag {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-family: 'Poppins', sans-serif;
+
+  &__amount {
+    font-weight: 600;
+    color: vars.$color-text-dark;
+  }
+
+  &__period {
+    font-family: 'Inter', sans-serif;
+    font-weight: 400;
+    color: vars.$color-text-primary;
+  }
+
+  // Tamaños
+  &--sm {
+    .price-tag__amount {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+
+    .price-tag__period {
+      font-size: 0.75rem;
+      line-height: 1.5;
+    }
+  }
+
+  &--md {
+    .price-tag__amount {
+      font-size: 1.25rem;
+      line-height: 1.5;
+    }
+
+    .price-tag__period {
+      font-size: 0.875rem;
+      line-height: 1.5;
+    }
+  }
+
+  &--lg {
+    .price-tag__amount {
+      font-size: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .price-tag__period {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  }
+}
