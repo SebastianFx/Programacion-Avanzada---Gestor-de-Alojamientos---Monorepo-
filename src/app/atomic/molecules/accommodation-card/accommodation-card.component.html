@@ -1,0 +1,56 @@
+<article class="accommodation-card" (click)="onCardClick()">
+  <!-- Imagen -->
+  <div class="accommodation-card__image-container">
+    <img
+      [src]="imageError ? fallbackImage : accommodation.mainImage"
+      [alt]="accommodation.title"
+      (error)="onImageError()"
+      class="accommodation-card__image"
+    />
+    
+    <!-- Badge Destacado -->
+    <div *ngIf="accommodation.featured" class="accommodation-card__badge">
+      <app-badge
+        variant="primary"
+        size="sm"
+        text="Destacado"
+      ></app-badge>
+    </div>
+  </div>
+
+  <!-- Contenido -->
+  <div class="accommodation-card__content">
+    <!-- Header -->
+    <div class="accommodation-card__header">
+      <h3 class="accommodation-card__title">{{ accommodation.title }}</h3>
+      <p class="accommodation-card__city">
+        <svg class="accommodation-card__location-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        {{ accommodation.city }}
+      </p>
+    </div>
+
+    <!-- Footer -->
+    <div class="accommodation-card__footer">
+      <!-- Rating -->
+      <div *ngIf="accommodation.rating" class="accommodation-card__rating">
+        <app-rating-stars
+          [rating]="accommodation.rating"
+          [size]="'sm'"
+          [showNumber]="true"
+        ></app-rating-stars>
+      </div>
+
+      <!-- Precio -->
+      <div class="accommodation-card__price">
+        <app-price-tag
+          [price]="accommodation.price"
+          [size]="'md'"
+          [period]="'noche'"
+        ></app-price-tag>
+      </div>
+    </div>
+  </div>
+</article>

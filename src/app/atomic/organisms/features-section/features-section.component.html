@@ -1,0 +1,21 @@
+<section class="features-section">
+  <div class="features-section__container">
+    <!-- Header -->
+    <div class="features-section__header">
+      <h2 class="features-section__title">¿Por Qué Elegirnos?</h2>
+      <p class="features-section__subtitle">
+        Ofrecemos la mejor experiencia en alojamientos con características que nos distinguen
+      </p>
+    </div>
+
+    <!-- Features Grid -->
+    <div class="features-section__grid">
+      <app-feature-card
+        *ngFor="let feature of features"
+        [icon]="feature.icon"
+        [title]="feature.title"
+        [description]="feature.description"
+      ></app-feature-card>
+    </div>
+  </div>
+</section>

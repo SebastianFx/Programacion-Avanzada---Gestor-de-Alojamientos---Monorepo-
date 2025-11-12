@@ -1,0 +1,63 @@
+<section class="hero">
+  <!-- Background Image -->
+  <div class="hero__background"></div>
+  
+  <!-- Overlay -->
+  <div class="hero__overlay"></div>
+
+  <!-- Content -->
+  <div class="hero__container">
+    <div class="hero__content">
+      <!-- Heading -->
+      <div class="hero__text">
+        <h1 class="hero__title">
+          Encuentra tu Alojamiento Perfecto
+        </h1>
+        <p class="hero__subtitle">
+          Descubre alojamientos únicos en el corazón del Eje Cafetero. 
+          Desde casas campestres hasta apartamentos modernos, tenemos el lugar ideal para ti.
+        </p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="hero__search">
+        <app-search-bar (search)="onSearch($event)"></app-search-bar>
+      </div>
+
+      <!-- CTA Button -->
+      <div class="hero__cta">
+        <button class="hero__button" (click)="onExploreClick()">
+          Explorar Alojamientos
+          <svg class="hero__button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <line x1="5" y1="12" x2="19" y2="12"/>
+            <polyline points="12 5 19 12 12 19"/>
+          </svg>
+        </button>
+      </div>
+
+      <!-- Stats Preview -->
+      <div class="hero__stats">
+        <div class="hero__stat">
+          <div class="hero__stat-value">150+</div>
+          <div class="hero__stat-label">Alojamientos</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-value">1,250+</div>
+          <div class="hero__stat-label">Huéspedes Felices</div>
+        </div>
+        <div class="hero__stat">
+          <div class="hero__stat-value">12</div>
+          <div class="hero__stat-label">Ciudades</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll Indicator -->
+  <div class="hero__scroll-indicator">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <line x1="12" y1="5" x2="12" y2="19"/>
+      <polyline points="19 12 12 19 5 12"/>
+    </svg>
+  </div>
+</section>
