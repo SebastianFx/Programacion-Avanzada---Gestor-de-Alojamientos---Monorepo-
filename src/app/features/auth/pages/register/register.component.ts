@@ -85,6 +85,10 @@ export class RegisterComponent implements OnInit {
     const formData = { ...this.registerForm.value };
     delete formData.confirmPassword; // No enviar confirmPassword al backend
 
+    // Mapear tipoUsuario a rol para el backend
+    formData.rol = formData.tipoUsuario;
+    delete formData.tipoUsuario;
+
     // Si hay foto de perfil, ya viene en formato base64 del componente hijo
     // El backend deberá manejar el campo fotoPerfil como string base64
 
