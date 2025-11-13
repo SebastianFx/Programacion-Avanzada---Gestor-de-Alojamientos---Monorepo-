@@ -1,9 +1,10 @@
 /**
- * Interfaz para las estadísticas generales del sistema
+ * Interfaz para estadísticas de la plataforma
+ * Coincide con StatisticsDTO del backend
  */
 export interface Statistics {
-  totalAccommodations: number;
-  totalUsers: number;
-  totalCities: number;
-  completedReservations: number;
+  totalAlojamientos: number;
+  totalUsuarios: number;
+  totalCiudades: number;
+  totalReservas: number;
 }

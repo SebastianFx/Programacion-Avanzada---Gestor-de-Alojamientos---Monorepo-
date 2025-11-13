@@ -1,32 +1,33 @@
 /**
- * Interfaz para representar un alojamiento en el sistema
- */
-export interface Accommodation {
-  id: number;
-  title: string;
-  description: string;
-  city: string;
-  address: string;
-  price: number;
-  capacity: number;
-  bathrooms: number;
-  featured: boolean;
-  available: boolean;
-  mainImage: string;
-  rating?: number;
-  reviewCount?: number;
-  hostName?: string;
-}
-
-/**
- * DTO simplificado para alojamientos destacados en landing
+ * Interfaz para alojamiento destacado
+ * Coincide con FeaturedAccommodationDTO del backend
  */
 export interface FeaturedAccommodation {
   id: number;
-  title: string;
-  city: string;
-  price: number;
-  mainImage: string;
-  rating?: number;
-  featured: boolean;
+  titulo: string; // Nombre en español como en el backend
+  ciudad: string;
+  precioPorNoche: number;
+  imagenPrincipal: string;
+  calificacionPromedio?: number;
+  destacado: boolean;
+}
+
+/**
+ * Interfaz completa para alojamiento
+ * Para uso futuro con más detalles
+ */
+export interface Accommodation {
+  id: number;
+  titulo: string;
+  descripcion: string;
+  ciudad: string;
+  direccionCompleta: string;
+  precioPorNoche: number;
+  capacidadMaxima: number;
+  tipo: string;
+  servicios: string[];
+  estado: string;
+  imagenPrincipal?: string;
+  calificacionPromedio?: number;
+  anfitrionNombre?: string;
 }

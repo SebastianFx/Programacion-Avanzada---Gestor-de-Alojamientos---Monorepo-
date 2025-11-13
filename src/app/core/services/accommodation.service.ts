@@ -1,89 +1,57 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable, of } from 'rxjs';
-import { FeaturedAccommodation } from '../models';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { map, catchError, retry } from 'rxjs/operators';
+import { FeaturedAccommodation, ApiResponse } from '../models';
 import { environment } from '../../../environments/environment';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AccommodationService {
-  private apiUrl = `${environment.apiUrl}/api/public/accommodations`;
+  private readonly apiUrl = `${environment.apiUrl}/api/public/accommodations`;
 
   constructor(private http: HttpClient) {}
 
   /**
    * Obtiene los alojamientos destacados para la landing page
    * Máximo 6 alojamientos según HU-V002
+   *
+   * @returns Observable con array de alojamientos destacados
    */
   getFeaturedAccommodations(): Observable<FeaturedAccommodation[]> {
-    // TODO: Descomentar cuando el backend esté listo
-    // return this.http.get<FeaturedAccommodation[]>(`${this.apiUrl}/featured`);
-    
-    // Mock temporal para desarrollo
-    return of(this.getMockAccommodations());
+    return this.http.get<ApiResponse<FeaturedAccommodation[]>>(`${this.apiUrl}/featured`).pipe(
+      retry(2), // Reintentar 2 veces en caso de error de red
+      map((response) => {
+        if (response.success && response.data) {
+          // El backend ya limita a 6, pero lo aseguramos aquí también
+          return response.data.slice(0, 6);
+        }
+        return [];
+      }),
+      catchError(this.handleError)
+    );
   }
 
   /**
-   * Mock de datos para desarrollo
-   * ELIMINAR cuando el backend esté implementado
+   * Manejo centralizado de errores HTTP
+   * @param error Error HTTP
    */
-  private getMockAccommodations(): FeaturedAccommodation[] {
-    return [
-      {
-        id: 1,
-        title: 'Casa Campestre en Salento',
-        city: 'Salento, Quindío',
-        price: 250000,
-        mainImage: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800',
-        rating: 4.8,
-        featured: true
-      },
-      {
-        id: 2,
-        title: 'Apartamento Moderno Centro',
-        city: 'Armenia, Quindío',
-        price: 180000,
-        mainImage: 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800',
-        rating: 4.5,
-        featured: true
-      },
-      {
-        id: 3,
-        title: 'Finca Cafetera con Piscina',
-        city: 'Circasia, Quindío',
-        price: 400000,
-        mainImage: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800',
-        rating: 4.9,
-        featured: true
-      },
-      {
-        id: 4,
-        title: 'Cabaña Romántica Bosque',
-        city: 'Filandia, Quindío',
-        price: 320000,
-        mainImage: 'https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?w=800',
-        rating: 4.7,
-        featured: true
-      },
-      {
-        id: 5,
-        title: 'Casa Familiar con Jardín',
-        city: 'Calarcá, Quindío',
-        price: 280000,
-        mainImage: 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800',
-        rating: 4.6,
-        featured: true
-      },
-      {
-        id: 6,
-        title: 'Loft Urbano Moderno',
-        city: 'Armenia, Quindío',
-        price: 200000,
-        mainImage: 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800',
-        rating: 4.4,
-        featured: true
-      }
-    ];
+  private handleError(error: HttpErrorResponse): Observable<never> {
+    let errorMessage = 'Ocurrió un error desconocido';
+
+    if (error.error instanceof ErrorEvent) {
+      // Error del lado del cliente
+      errorMessage = `Error: ${error.error.message}`;
+      console.error('Error del cliente:', error.error.message);
+    } else {
+      // Error del lado del servidor
+      errorMessage = error.error?.message || `Error ${error.status}: ${error.statusText}`;
+      console.error(
+        `Backend returned code ${error.status}, ` + `body was: ${JSON.stringify(error.error)}`
+      );
+    }
+
+    return throwError(() => new Error(errorMessage));
   }
 }
