@@ -19,30 +19,44 @@
 
     <!-- Auth Buttons (Desktop) -->
     <div class="navbar__actions">
-      <button class="navbar__button navbar__button--secondary" (click)="onLogin()">
-        Iniciar Sesión
-      </button>
-      <button class="navbar__button navbar__button--primary" (click)="onRegister()">
-        Registrarse
-      </button>
+      <!-- Botones cuando NO está autenticado -->
+      @if (!(currentUser$ | async)) {
+        <button class="navbar__button navbar__button--secondary" (click)="onLogin()">
+          Iniciar Sesión
+        </button>
+        <button class="navbar__button navbar__button--primary" (click)="onRegister()">
+          Registrarse
+        </button>
+      }
+
+      <!-- Botón cuando está autenticado -->
+      @if (currentUser$ | async; as user) {
+        <button class="navbar__button navbar__button--logout" (click)="onLogout()">
+          Cerrar Sesión
+        </button>
+      }
     </div>
 
     <!-- Mobile Menu Toggle -->
-    <button 
-      class="navbar__mobile-toggle" 
+    <button
+      class="navbar__mobile-toggle"
       (click)="toggleMobileMenu()"
       [attr.aria-label]="isMobileMenuOpen ? 'Cerrar menú' : 'Abrir menú'"
       [attr.aria-expanded]="isMobileMenuOpen"
     >
-      <svg *ngIf="!isMobileMenuOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="3" y1="12" x2="21" y2="12"/>
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <line x1="3" y1="18" x2="21" y2="18"/>
-      </svg>
-      <svg *ngIf="isMobileMenuOpen" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <line x1="18" y1="6" x2="6" y2="18"/>
-        <line x1="6" y1="6" x2="18" y2="18"/>
-      </svg>
+      @if (!isMobileMenuOpen) {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="3" y1="12" x2="21" y2="12"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <line x1="3" y1="18" x2="21" y2="18"/>
+        </svg>
+      }
+      @if (isMobileMenuOpen) {
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      }
     </button>
   </div>
 
@@ -56,12 +70,22 @@
     </div>
 
     <div class="navbar__mobile-actions">
-      <button class="navbar__mobile-button navbar__mobile-button--secondary" (click)="onLogin()">
-        Iniciar Sesión
-      </button>
-      <button class="navbar__mobile-button navbar__mobile-button--primary" (click)="onRegister()">
-        Registrarse
-      </button>
+      <!-- Botones cuando NO está autenticado -->
+      @if (!(currentUser$ | async)) {
+        <button class="navbar__mobile-button navbar__mobile-button--secondary" (click)="onLogin()">
+          Iniciar Sesión
+        </button>
+        <button class="navbar__mobile-button navbar__mobile-button--primary" (click)="onRegister()">
+          Registrarse
+        </button>
+      }
+
+      <!-- Botón cuando está autenticado -->
+      @if (currentUser$ | async; as user) {
+        <button class="navbar__mobile-button navbar__mobile-button--logout" (click)="onLogout()">
+          Cerrar Sesión
+        </button>
+      }
     </div>
   </div>
 

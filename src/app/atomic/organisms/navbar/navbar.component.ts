@@ -1,5 +1,8 @@
 import { Component, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../../../core/services/auth.service';
+import { Observable } from 'rxjs';
+import { User } from '../../../core/models/auth.model';
 
 @Component({
   selector: 'app-navbar',
@@ -10,8 +13,14 @@ import { Router } from '@angular/router';
 export class NavbarComponent {
   isScrolled = false;
   isMobileMenuOpen = false;
+  currentUser$: Observable<User | null>;
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {
+    this.currentUser$ = this.authService.currentUser$;
+  }
 
   @HostListener('window:scroll', [])
   onWindowScroll() {
@@ -38,6 +47,11 @@ export class NavbarComponent {
 
   onRegister(): void {
     this.router.navigate(['/auth/register']);
+    this.closeMobileMenu();
+  }
+
+  onLogout(): void {
+    this.authService.logout();
     this.closeMobileMenu();
   }
 }
