@@ -144,6 +144,19 @@
         box-shadow: vars.$shadow-md;
       }
     }
+
+    &--logout {
+      background: transparent;
+      color: #dc2626;
+      border: 2px solid #dc2626;
+
+      &:hover {
+        background: #dc2626;
+        color: vars.$color-white;
+        transform: translateY(-2px);
+        box-shadow: vars.$shadow-md;
+      }
+    }
   }
 
   // Mobile Menu Toggle
@@ -259,6 +272,18 @@
 
       &:hover {
         background: vars.$gradient-gold;
+        box-shadow: vars.$shadow-md;
+      }
+    }
+
+    &--logout {
+      background: transparent;
+      color: #dc2626;
+      border: 2px solid #dc2626;
+
+      &:hover {
+        background: #dc2626;
+        color: vars.$color-white;
         box-shadow: vars.$shadow-md;
       }
     }
