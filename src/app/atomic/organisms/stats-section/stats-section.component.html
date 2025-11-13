@@ -1,27 +1,48 @@
 <section class="stats-section">
   <div class="stats-section__container">
-    <!-- Header -->
     <div class="stats-section__header">
-      <h2 class="stats-section__title">Números Que Nos Respaldan</h2>
+      <h2 class="stats-section__title">Nuestra Plataforma en Números</h2>
       <p class="stats-section__subtitle">
-        Nuestra plataforma en crecimiento constante
+        Miles de usuarios confían en nosotros para encontrar su alojamiento perfecto
       </p>
     </div>
 
     <!-- Loading State -->
     <div *ngIf="isLoading" class="stats-section__loading">
-      <div class="stats-section__spinner"></div>
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Cargando estadísticas...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="stats-section__error">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-button color="primary" (click)="retry()">
+        <mat-icon>refresh</mat-icon>
+        Reintentar
+      </button>
     </div>
 
     <!-- Stats Grid -->
-    <div *ngIf="!isLoading && stats.length > 0" class="stats-section__grid">
-      <app-stat-card
-        *ngFor="let stat of stats"
-        [value]="stat.value"
-        [label]="stat.label"
-        [icon]="stat.icon"
-        [suffix]="stat.suffix || ''"
-      ></app-stat-card>
+    <div *ngIf="!isLoading && !error && statistics" class="stats-section__grid">
+      <div
+        *ngFor="let stat of statsConfig"
+        class="stat-card"
+        [class.stat-card--primary]="stat.color === 'primary'"
+        [class.stat-card--accent]="stat.color === 'accent'"
+        [class.stat-card--warn]="stat.color === 'warn'"
+      >
+        <div class="stat-card__icon-container">
+          <mat-icon class="stat-card__icon">{{ stat.icon }}</mat-icon>
+        </div>
+
+        <div class="stat-card__content">
+          <p class="stat-card__value">
+            {{ formatNumber(getStatValue(stat.key)) }}
+          </p>
+          <p class="stat-card__label">{{ stat.label }}</p>
+        </div>
+      </div>
     </div>
   </div>
 </section>

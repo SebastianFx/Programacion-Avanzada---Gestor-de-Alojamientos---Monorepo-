@@ -33,7 +33,8 @@ import { FeaturesSectionComponent } from './organisms/features-section/features-
 import { TestimonialsSectionComponent } from './organisms/testimonials-section/testimonials-section.component';
 import { StatsSectionComponent } from './organisms/stats-section/stats-section.component';
 
-const ATOMIC_COMPONENTS = [
+// Non-standalone components (declared in the module)
+const MODULE_COMPONENTS = [
   // Atoms
   ButtonComponent,
   InputComponent,
@@ -47,7 +48,6 @@ const ATOMIC_COMPONENTS = [
   FormFieldComponent,
   ImageUploadComponent,
   SearchBarComponent,
-  AccommodationCardComponent,
   FeatureCardComponent,
   StatCardComponent,
   TestimonialCardComponent,
@@ -57,15 +57,26 @@ const ATOMIC_COMPONENTS = [
   NavbarComponent,
   FooterComponent,
   HeroSectionComponent,
-  FeaturedGridComponent,
   FeaturesSectionComponent,
   TestimonialsSectionComponent,
+];
+
+// Standalone components (imported in the module)
+const STANDALONE_COMPONENTS = [
+  AccommodationCardComponent,
+  FeaturedGridComponent,
   StatsSectionComponent,
 ];
 
 @NgModule({
-  declarations: [...ATOMIC_COMPONENTS],
-  imports: [CommonModule, ReactiveFormsModule, FormsModule, RouterModule],
-  exports: [...ATOMIC_COMPONENTS],
+  declarations: [...MODULE_COMPONENTS],
+  imports: [
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule,
+    RouterModule,
+    ...STANDALONE_COMPONENTS,
+  ],
+  exports: [...MODULE_COMPONENTS, ...STANDALONE_COMPONENTS],
 })
 export class AtomicModule {}
