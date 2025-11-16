@@ -1,0 +1,94 @@
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #bf9765 0%, #d9b777 50%, #8b6914 100%);
+  padding: 1.5rem;
+}
+
+.register-card {
+  width: 100%;
+  max-width: 550px;
+  background: white;
+  border-radius: 1rem;
+  box-shadow: 0 20px 60px rgba(139, 105, 20, 0.25);
+  overflow: hidden;
+  margin: 2rem 0;
+}
+
+.header {
+  text-align: center;
+  padding: 2rem 2rem 1rem;
+  background: linear-gradient(135deg, #d9b777 0%, #bf9765 100%);
+  color: white;
+
+  .title {
+    font-size: 1.875rem;
+    font-weight: 700;
+    font-family: 'Poppins', sans-serif;
+    margin: 0 0 0.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+    font-family: 'Inter', sans-serif;
+    opacity: 0.95;
+    margin: 0;
+  }
+}
+
+.login-link {
+  text-align: center;
+  padding: 1.5rem 2rem;
+  border-top: 1px solid #e8e8e8;
+  font-size: 0.875rem;
+  color: #808080;
+  font-family: 'Inter', sans-serif;
+
+  span {
+    margin-right: 0.5rem;
+  }
+
+  .link-primary {
+    color: #d9b777;
+    font-weight: 600;
+    cursor: pointer;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #bf9765;
+      text-decoration: underline;
+    }
+
+    &:active {
+      color: #8b6914;
+    }
+  }
+}
+
+@media (max-width: 640px) {
+  .register-container {
+    padding: 1rem;
+  }
+
+  .register-card {
+    margin: 1rem 0;
+  }
+
+  .header {
+    padding: 1.5rem 1.5rem 0.75rem;
+
+    .title {
+      font-size: 1.5rem;
+    }
+
+    .subtitle {
+      font-size: 0.875rem;
+    }
+  }
+
+  .login-link {
+    padding: 1.25rem 1.5rem;
+  }
+}

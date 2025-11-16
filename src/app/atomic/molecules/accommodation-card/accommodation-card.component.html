@@ -1,0 +1,58 @@
+<div class="accommodation-card" (click)="onCardClick()">
+  <!-- Imagen del alojamiento -->
+  <div class="accommodation-card__image-container">
+    <img
+      [src]="displayImage"
+      [alt]="accommodation.titulo"
+      class="accommodation-card__image"
+      loading="lazy"
+      (error)="onImageError()"
+    />
+
+    <!-- Badge de destacado -->
+    <div class="accommodation-card__badge" *ngIf="accommodation.destacado">
+      <mat-icon class="badge-icon">star</mat-icon>
+      <span>Destacado</span>
+    </div>
+  </div>
+
+  <!-- Contenido de la tarjeta -->
+  <div class="accommodation-card__content">
+    <!-- Título -->
+    <h3 class="accommodation-card__title">
+      {{ accommodation.titulo }}
+    </h3>
+
+    <!-- Ciudad -->
+    <div class="accommodation-card__location">
+      <mat-icon class="location-icon">place</mat-icon>
+      <span>{{ accommodation.ciudad }}</span>
+    </div>
+
+    <!-- Rating (si existe) -->
+    <div class="accommodation-card__rating" *ngIf="accommodation.calificacionPromedio">
+      <div class="rating-stars">
+        <mat-icon *ngFor="let star of ratingStars" class="star-icon"> star </mat-icon>
+      </div>
+      <span class="rating-value">{{ accommodation.calificacionPromedio | number : '1.1-1' }}</span>
+    </div>
+
+    <!-- Precio -->
+    <div class="accommodation-card__footer">
+      <div class="price-container">
+        <span class="price-amount">{{ formattedPrice }}</span>
+        <span class="price-period">/ noche</span>
+      </div>
+
+      <!-- Botón de acción -->
+      <button
+        mat-icon-button
+        class="action-button"
+        (click)="onCardClick(); $event.stopPropagation()"
+        aria-label="Ver detalles"
+      >
+        <mat-icon>arrow_forward</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

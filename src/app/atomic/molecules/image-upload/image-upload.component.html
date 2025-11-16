@@ -1,0 +1,66 @@
+<div class="image-upload-container">
+  <label class="image-upload-label">
+    {{ label }}
+    <span *ngIf="required" class="required-mark">*</span>
+  </label>
+
+  <div class="upload-area" [class.has-image]="imagePreview">
+    <!-- Preview de la imagen -->
+    <div *ngIf="imagePreview" class="image-preview">
+      <img [src]="imagePreview" [alt]="fileName" class="preview-image" />
+      <div class="image-overlay">
+        <button
+          type="button"
+          class="change-image-btn"
+          (click)="triggerFileInput()"
+          [disabled]="disabled">
+          <app-icon name="edit" [size]="20"></app-icon>
+          <span>Cambiar</span>
+        </button>
+        <button
+          type="button"
+          class="remove-image-btn"
+          (click)="removeImage()"
+          [disabled]="disabled">
+          <app-icon name="trash" [size]="20"></app-icon>
+          <span>Eliminar</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Área de subida inicial -->
+    <div *ngIf="!imagePreview" class="upload-placeholder" (click)="triggerFileInput()">
+      <app-icon name="image" [size]="48"></app-icon>
+      <p class="upload-text">
+        <span class="upload-action">Haz clic para subir</span>
+        <span class="upload-hint">o arrastra y suelta</span>
+      </p>
+      <p class="upload-info">
+        PNG, JPG o WEBP (máx. {{ maxSizeMB }}MB)
+      </p>
+    </div>
+
+    <!-- Input oculto -->
+    <input
+      type="file"
+      id="file-input"
+      class="file-input"
+      [accept]="acceptedFormats"
+      (change)="onFileSelected($event)"
+      [disabled]="disabled"
+      hidden
+    />
+  </div>
+
+  <!-- Mensaje de error -->
+  <div *ngIf="errorMessage" class="error-message">
+    <app-icon name="alert-circle" [size]="16"></app-icon>
+    <span>{{ errorMessage }}</span>
+  </div>
+
+  <!-- Nombre del archivo -->
+  <div *ngIf="fileName && !errorMessage" class="file-name">
+    <app-icon name="check-circle" [size]="16"></app-icon>
+    <span>{{ fileName }}</span>
+  </div>
+</div>

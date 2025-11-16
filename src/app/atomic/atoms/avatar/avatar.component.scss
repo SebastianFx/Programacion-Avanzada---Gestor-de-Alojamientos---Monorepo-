@@ -1,0 +1,88 @@
+@use '../../../../styles/variables' as vars;
+
+.avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+  background-color: vars.$color-primary;
+  position: relative;
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__fallback {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: vars.$gradient-primary;
+  }
+
+  &__initials {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    color: vars.$color-white;
+    user-select: none;
+  }
+
+  // Formas
+  &--circle {
+    border-radius: 50%;
+  }
+
+  &--square {
+    border-radius: vars.$border-radius-md;
+  }
+
+  // Tamaños
+  &--xs {
+    width: 1.5rem;
+    height: 1.5rem;
+
+    .avatar__initials {
+      font-size: 0.625rem;
+    }
+  }
+
+  &--sm {
+    width: 2rem;
+    height: 2rem;
+
+    .avatar__initials {
+      font-size: 0.75rem;
+    }
+  }
+
+  &--md {
+    width: 2.5rem;
+    height: 2.5rem;
+
+    .avatar__initials {
+      font-size: 0.875rem;
+    }
+  }
+
+  &--lg {
+    width: 3rem;
+    height: 3rem;
+
+    .avatar__initials {
+      font-size: 1rem;
+    }
+  }
+
+  &--xl {
+    width: 4rem;
+    height: 4rem;
+
+    .avatar__initials {
+      font-size: 1.25rem;
+    }
+  }
+}

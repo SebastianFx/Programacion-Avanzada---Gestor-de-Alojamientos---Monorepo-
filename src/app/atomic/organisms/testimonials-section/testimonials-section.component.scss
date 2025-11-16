@@ -1,0 +1,91 @@
+@use '../../../../styles/variables' as vars;
+
+.testimonials-section {
+  padding: 6rem 2rem;
+  background: vars.$color-background;
+
+  @media (max-width: 768px) {
+    padding: 4rem 1.5rem;
+  }
+
+  &__container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  &__header {
+    text-align: center;
+    max-width: 700px;
+    margin: 0 auto 4rem;
+
+    @media (max-width: 768px) {
+      margin: 0 auto 3rem;
+    }
+  }
+
+  &__title {
+    font-family: 'Poppins', sans-serif;
+    font-size: clamp(1.75rem, 4vw, 2.5rem);
+    font-weight: 700;
+    line-height: 1.3;
+    color: vars.$color-text-dark;
+    margin: 0 0 1rem;
+  }
+
+  &__subtitle {
+    font-family: 'Inter', sans-serif;
+    font-size: clamp(0.875rem, 2vw, 1.125rem);
+    line-height: 1.7;
+    color: vars.$color-text-primary;
+    margin: 0;
+  }
+
+  &__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+
+    @media (max-width: 1024px) {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem;
+    }
+
+    @media (max-width: 640px) {
+      grid-template-columns: 1fr;
+      gap: 1.25rem;
+    }
+  }
+
+  &__loading {
+    display: flex;
+    justify-content: center;
+    padding: 4rem 2rem;
+  }
+
+  &__spinner {
+    width: 3rem;
+    height: 3rem;
+    border: 4px solid vars.$color-gray-light;
+    border-top-color: vars.$color-primary;
+    border-radius: 50%;
+    animation: spin 0.8s linear infinite;
+  }
+
+  &__empty {
+    text-align: center;
+    padding: 4rem 2rem;
+
+    p {
+      font-family: 'Inter', sans-serif;
+      font-size: 1rem;
+      color: vars.$color-text-primary;
+      margin: 0;
+    }
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
+  }
+}

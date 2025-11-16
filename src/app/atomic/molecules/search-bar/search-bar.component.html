@@ -1,0 +1,110 @@
+<form [formGroup]="searchForm" (ngSubmit)="onSubmit()" class="search-bar">
+  <div class="search-bar__container">
+    <!-- Ciudad -->
+    <div class="search-bar__field search-bar__field--city">
+      <label for="city" class="search-bar__label">
+        <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+          <circle cx="12" cy="10" r="3"/>
+        </svg>
+        Ciudad
+      </label>
+      <input
+        id="city"
+        type="text"
+        formControlName="city"
+        placeholder="¿A dónde viajas?"
+        class="search-bar__input"
+        [class.search-bar__input--error]="cityControl?.invalid && cityControl?.touched"
+      />
+      <div *ngIf="cityControl?.invalid && cityControl?.touched" class="search-bar__error">
+        Ciudad requerida
+      </div>
+    </div>
+
+    <!-- Check-in -->
+    <div class="search-bar__field">
+      <label for="checkIn" class="search-bar__label">
+        <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Check-in
+      </label>
+      <input
+        id="checkIn"
+        type="date"
+        formControlName="checkIn"
+        [min]="today | date: 'yyyy-MM-dd'"
+        class="search-bar__input"
+      />
+    </div>
+
+    <!-- Check-out -->
+    <div class="search-bar__field">
+      <label for="checkOut" class="search-bar__label">
+        <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+          <line x1="16" y1="2" x2="16" y2="6"/>
+          <line x1="8" y1="2" x2="8" y2="6"/>
+          <line x1="3" y1="10" x2="21" y2="10"/>
+        </svg>
+        Check-out
+      </label>
+      <input
+        id="checkOut"
+        type="date"
+        formControlName="checkOut"
+        [min]="today | date: 'yyyy-MM-dd'"
+        class="search-bar__input"
+        [class.search-bar__input--error]="checkOutControl?.hasError('invalidDate')"
+      />
+      <div *ngIf="checkOutControl?.hasError('invalidDate')" class="search-bar__error">
+        Debe ser posterior al check-in
+      </div>
+    </div>
+
+    <!-- Rango de Precio -->
+    <div class="search-bar__field search-bar__field--price">
+      <label class="search-bar__label">
+        <svg class="search-bar__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <line x1="12" y1="1" x2="12" y2="23"/>
+          <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+        </svg>
+        Precio
+      </label>
+      <div class="search-bar__price-range">
+        <input
+          type="number"
+          formControlName="minPrice"
+          placeholder="Min"
+          class="search-bar__input search-bar__input--small"
+          min="0"
+        />
+        <span class="search-bar__separator">-</span>
+        <input
+          type="number"
+          formControlName="maxPrice"
+          placeholder="Max"
+          class="search-bar__input search-bar__input--small"
+          min="0"
+        />
+      </div>
+    </div>
+
+    <!-- Botón de búsqueda -->
+    <button
+      type="submit"
+      class="search-bar__button"
+      [disabled]="searchForm.invalid"
+    >
+      <svg class="search-bar__button-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <circle cx="11" cy="11" r="8"/>
+        <path d="m21 21-4.35-4.35"/>
+      </svg>
+      <span class="search-bar__button-text">Buscar</span>
+    </button>
+  </div>
+</form>

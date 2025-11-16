@@ -1,6 +1,7 @@
 version: '3.8'
 
 services:
+<<<<<<< HEAD
   # --- Servicio de Base de Datos ---
   mysql:
     image: mysql:8.4.6
@@ -84,3 +85,21 @@ networks:
 volumes:
   mysql_data: # El volumen para persistir datos de la BD
     driver: local
+=======
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: proyecto-avanzada-frontend
+    ports:
+      - '4200:80'
+    environment:
+      - NODE_ENV=production
+    networks:
+      - app-network
+    restart: unless-stopped
+
+networks:
+  app-network:
+    driver: bridge
+>>>>>>> original-frontend/main
