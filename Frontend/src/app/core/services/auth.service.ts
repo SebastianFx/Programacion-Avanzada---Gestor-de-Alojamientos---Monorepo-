@@ -131,4 +131,38 @@ export class AuthService {
   resetPassword(token: string, newPassword: string): Observable<any> {
     return this.http.post(`${this.baseUrl}/reset-password`, { token, newPassword });
   }
+
+  /**
+   * Verifica si el usuario actual tiene rol de Anfitrión
+   */
+  isHost(): boolean {
+    const user = this.getCurrentUser();
+    return user?.rol === 'ANFITRION' || user?.rol === 'ADMINISTRADOR';
+  }
+
+  /**
+   * Verifica si el usuario actual tiene rol de Administrador
+   */
+  isAdmin(): boolean {
+    const user = this.getCurrentUser();
+    return user?.rol === 'ADMINISTRADOR';
+  }
+
+  /**
+   * Obtiene el rol del usuario desde el token JWT
+   */
+  getRoleFromToken(): string | null {
+    const token = this.getToken();
+    if (!token) {
+      return null;
+    }
+
+    try {
+      const payload = JSON.parse(atob(token.split('.')[1]));
+      return payload.rol || null;
+    } catch (error) {
+      console.error('Error al extraer rol del token', error);
+      return null;
+    }
+  }
 }
