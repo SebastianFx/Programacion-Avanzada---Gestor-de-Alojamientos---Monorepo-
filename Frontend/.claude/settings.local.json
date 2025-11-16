@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(ng build:*)",
+      "Bash(timeout 10 ng serve:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

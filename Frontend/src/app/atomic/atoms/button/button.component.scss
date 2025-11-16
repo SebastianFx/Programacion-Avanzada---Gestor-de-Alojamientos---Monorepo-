@@ -1,0 +1,144 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 0.2s ease;
+  cursor: pointer;
+  border: 2px solid transparent;
+  font-family: 'Inter', sans-serif;
+  white-space: nowrap;
+
+  &:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(217, 183, 119, 0.3); // 🎨 Focus dorado
+  }
+
+  // Sizes
+  &-small {
+    padding: 0.5rem 1rem;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+  }
+
+  &-medium {
+    padding: 0.625rem 1.25rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  &-large {
+    padding: 0.75rem 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+  }
+
+  &-primary {
+    background: linear-gradient(135deg, #d9b777 0%, #bf9765 100%);
+    color: white;
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      background: linear-gradient(135deg, #bf9765 0%, #8b6914 100%);
+      transform: translateY(-1px);
+      box-shadow: 0 10px 15px -3px rgba(139, 105, 20, 0.2);
+    }
+
+    &:active:not(:disabled) {
+      transform: translateY(0);
+      background: linear-gradient(135deg, #8b6914 0%, #bf9765 100%);
+    }
+  }
+
+  &-secondary {
+    background-color: #bf9765;
+    color: white;
+    border-color: #bf9765;
+
+    &:hover:not(:disabled) {
+      background-color: #d9b777;
+    }
+
+    &:active:not(:disabled) {
+      background-color: #8b6914;
+    }
+  }
+
+  &-outline {
+    background-color: transparent;
+    color: #d9b777;
+    border-color: #d9b777;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(217, 183, 119, 0.1);
+      border-color: #bf9765;
+      color: #bf9765;
+    }
+
+    &:active:not(:disabled) {
+      background-color: rgba(217, 183, 119, 0.2);
+      border-color: #8b6914;
+      color: #8b6914;
+    }
+  }
+
+  &-text {
+    background-color: transparent;
+    color: #d9b777;
+    border-color: transparent;
+
+    &:hover:not(:disabled) {
+      background-color: rgba(217, 183, 119, 0.1);
+      color: #bf9765;
+    }
+
+    &:active:not(:disabled) {
+      background-color: rgba(217, 183, 119, 0.2);
+      color: #8b6914;
+    }
+  }
+
+  // States
+  &-disabled,
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+
+  &-loading {
+    position: relative;
+    color: transparent;
+
+    .spinner {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 1rem;
+      height: 1rem;
+      border: 2px solid currentColor;
+      border-top-color: transparent;
+      border-radius: 50%;
+      animation: spin 0.6s linear infinite;
+    }
+  }
+
+  &-full-width {
+    width: 100%;
+  }
+}
+
+@keyframes spin {
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+.btn-content {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}

@@ -1,0 +1,24 @@
+<button
+  [type]="type"
+  [class]="buttonClasses"
+  [disabled]="disabled || loading"
+  (click)="onClick($event)">
+  
+  <span *ngIf="loading" class="spinner"></span>
+  
+  <app-icon 
+    *ngIf="icon && iconPosition === 'left' && !loading"
+    [name]="icon"
+    [size]="size === 'small' ? 16 : size === 'large' ? 24 : 20">
+  </app-icon>
+  
+  <span class="btn-content">
+    <ng-content></ng-content>
+  </span>
+  
+  <app-icon 
+    *ngIf="icon && iconPosition === 'right' && !loading"
+    [name]="icon"
+    [size]="size === 'small' ? 16 : size === 'large' ? 24 : 20">
+  </app-icon>
+</button>

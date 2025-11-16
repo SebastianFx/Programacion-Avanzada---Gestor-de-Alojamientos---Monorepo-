@@ -1,0 +1,280 @@
+package uniquindio.edu.co.Proyecto_Avanzada.aplicacion.controller.anfitrion;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoCreateDTO;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoDTO;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoSummaryDTO;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoUpdateDTO;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.service.AlojamientoService;
+import org.springframework.http.HttpStatus;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.enums.EstadoAlojamiento;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoDTO;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+@RestController
+@RequestMapping("/api/anfitrion/alojamientos")
+@Tag(name = "Alojamientos", description = "Gestión de alojamientos por anfitriones")
+@SecurityRequirement(name = "Bearer Authentication")
+public class AlojamientoController {
+
+    @Autowired
+    private AlojamientoService alojamientoService;
+
+    @PostMapping
+    @Operation(summary = "Crear nuevo alojamiento", description = "HU-A001: Crear alojamiento con información completa, servicios e imágenes")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Alojamiento creado exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Datos inválidos (precio <=0, capacidad <=0)"),
+            @ApiResponse(responseCode = "401", description = "Usuario no autenticado"),
+            @ApiResponse(responseCode = "403", description = "Usuario no es anfitrión")
+    })
+    public ResponseEntity<Map<String, Object>> crearAlojamiento(@RequestBody AlojamientoCreateDTO alojamientoCreateDTO) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // NOTA: El ID del anfitrión se debería extraer del token de autenticación.
+            // Por ahora, para probar, usamos un ID fijo.
+            Long anfitrionId = 1L;
+
+            var alojamientoCreado = alojamientoService.crearAlojamiento(alojamientoCreateDTO, anfitrionId);
+
+            response.put("message", "Alojamiento creado exitosamente");
+            response.put("alojamiento", alojamientoCreado);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @GetMapping
+    @Operation(summary = "Gestionar mis alojamientos", description = "HU-A002: Ver lista de todos mis alojamientos con métricas básicas")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Lista obtenida exitosamente"),
+            // ... (otras respuestas)
+    })
+    public ResponseEntity<Map<String, Object>> gestionarMisAlojamientos(
+            // NOTA: Por ahora ignoraremos los parámetros de paginación y filtro para simplificar.
+            // Más adelante se pueden implementar.
+            @Parameter(description = "Filtro por estado: ACTIVO, INACTIVO, ELIMINADO")
+            @RequestParam(required = false) String estado,
+            @Parameter(description = "Página (0-based)", example = "0")
+            @RequestParam(defaultValue = "0") int page,
+            @Parameter(description = "Tamaño de página", example = "10")
+            @RequestParam(defaultValue = "10") int size
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // Como antes, usamos un ID de anfitrión fijo para probar.
+            Long anfitrionId = 1L;
+
+            // Llamamos a nuestro nuevo método del servicio.
+            List<AlojamientoSummaryDTO> misAlojamientos = alojamientoService.listarAlojamientosPorAnfitrion(anfitrionId);
+
+            response.put("alojamientos", misAlojamientos);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            response.put("error", e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{alojamientoId}")
+    @Operation(summary = "Editar alojamiento", description = "HU-A002: Actualizar información de alojamiento propio")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Alojamiento actualizado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Alojamiento no encontrado"),
+            @ApiResponse(responseCode = "403", description = "No tienes permiso para editar este alojamiento")
+    })
+    public ResponseEntity<Map<String, Object>> actualizarAlojamiento(
+            @PathVariable Long alojamientoId,
+            @RequestBody AlojamientoUpdateDTO updateDTO
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // De nuevo, usamos un ID de anfitrión fijo para probar.
+            Long anfitrionId = 1L;
+
+            AlojamientoDTO alojamientoActualizado = alojamientoService.actualizarAlojamiento(alojamientoId, updateDTO, anfitrionId);
+
+            response.put("message", "Alojamiento actualizado exitosamente");
+            response.put("alojamiento", alojamientoActualizado);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            // Manejo de errores específicos
+            if (e.getMessage().contains("No tienes permiso")) {
+                response.put("error", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN); // 403 Prohibido
+            }
+            if (e.getMessage().contains("no fue encontrado")) {
+                response.put("error", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND); // 404 No Encontrado
+            }
+            // Error genérico
+            response.put("error", "Ocurrió un error inesperado: " + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PutMapping("/{id}/estado")
+    @Operation(summary = "Activar/Inactivar alojamiento",
+            description = "HU-A002: Cambiar estado de alojamiento temporalmente")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Estado actualizado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Alojamiento no encontrado o no te pertenece"),
+            @ApiResponse(responseCode = "409", description = "Conflicto: No se puede inactivar con reservas futuras"),
+            @ApiResponse(responseCode = "400", description = "Estado inválido proporcionado"),
+            @ApiResponse(responseCode = "403", description = "No tienes permiso para realizar esta acción") // Añadido para permiso
+    })
+    public ResponseEntity<Map<String, Object>> cambiarEstado(
+            @Parameter(description = "ID del alojamiento", required = true)
+            @PathVariable Long id,
+            @Parameter(description = "Nuevo estado: ACTIVO, INACTIVO", required = true)
+            @RequestParam String estado, // Recibimos como String
+            @Parameter(description = "Motivo del cambio de estado")
+            @RequestParam(required = false) String motivo
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // Convertir el String del estado a Enum (manejo de error si no es válido)
+            EstadoAlojamiento nuevoEstadoEnum;
+            try {
+                nuevoEstadoEnum = EstadoAlojamiento.valueOf(estado.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                response.put("error", "El estado proporcionado ('" + estado + "') no es válido. Use ACTIVO o INACTIVO.");
+                return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); // 400
+            }
+
+            // --- ¡Importante! Extraer el ID del anfitrión del token ---
+            // Esto sigue pendiente hasta que se configure Spring Security.
+            // Por ahora, usamos el ID fijo para que compile y funcione como los otros métodos.
+            Long anfitrionId = 1L;
+
+            // Llamar al servicio real
+            AlojamientoDTO alojamientoActualizado = alojamientoService.cambiarEstadoAlojamiento(id, nuevoEstadoEnum, anfitrionId);
+
+            // Construir la respuesta (puedes hacerla más detallada si quieres)
+            response.put("message", "Estado actualizado exitosamente");
+            // Devolvemos el DTO completo actualizado
+            response.put("alojamiento", alojamientoActualizado);
+            // Podrías añadir lógica para los "efectos" si es necesario
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            // Manejo de errores específicos del servicio
+            if (e.getMessage().contains("No tienes permiso")) {
+                response.put("error", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN); // 403
+            }
+            if (e.getMessage().contains("Alojamiento no encontrado")) {
+                response.put("error", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND); // 404
+            }
+            if (e.getMessage().contains("reservas futuras activas")) {
+                response.put("error", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT); // 409
+            }
+            // Error genérico
+            response.put("error", "Ocurrió un error inesperado: " + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR); // 500
+        }
+    }
+
+    @DeleteMapping("/{alojamientoId}")
+    @Operation(summary = "Eliminar alojamiento", description = "HU-A002: Eliminación lógica si NO hay reservas futuras")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Alojamiento eliminado exitosamente"),
+            @ApiResponse(responseCode = "404", description = "Alojamiento no encontrado"),
+            @ApiResponse(responseCode = "403", description = "No tienes permiso para eliminar"),
+            @ApiResponse(responseCode = "409", description = "Conflicto: El alojamiento tiene reservas futuras")
+    })
+    public ResponseEntity<Map<String, Object>> eliminarAlojamiento(
+            @PathVariable Long alojamientoId,
+            @Parameter(description = "Confirmación requerida para eliminar", required = true)
+            @RequestParam boolean confirmar
+    ) {
+        Map<String, Object> response = new HashMap<>();
+
+        if (!confirmar) {
+            response.put("error", "La confirmación es requerida para eliminar.");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
+
+        try {
+            // ID del anfitrión fijo para pruebas.
+            Long anfitrionId = 1L;
+
+            alojamientoService.eliminarAlojamiento(alojamientoId, anfitrionId);
+
+            response.put("message", "Alojamiento eliminado exitosamente");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } catch (Exception e) {
+            // Manejo de errores específicos
+            if (e.getMessage().contains("reservas futuras")) {
+                response.put("error", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.CONFLICT); // 409 Conflicto
+            }
+            if (e.getMessage().contains("No tienes permiso")) {
+                response.put("error", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.FORBIDDEN); // 403 Prohibido
+            }
+            if (e.getMessage().contains("no fue encontrado")) {
+                response.put("error", e.getMessage());
+                return new ResponseEntity<>(response, HttpStatus.NOT_FOUND); // 404 No Encontrado
+            }
+            // Error genérico
+            response.put("error", "Ocurrió un error inesperado: " + e.getMessage());
+            return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    @PostMapping("/{id}/imagenes")
+    @Operation(summary = "Subir imágenes del alojamiento",
+            description = "Subir entre 1 y 10 imágenes, marcar una como principal")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Imágenes subidas exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Formato de imagen inválido o excede límite de 10"),
+            @ApiResponse(responseCode = "404", description = "Alojamiento no encontrado")
+    })
+    public ResponseEntity<Map<String, Object>> subirImagenes(
+            @Parameter(description = "ID del alojamiento", required = true)
+            @PathVariable Long id,
+
+            @Parameter(description = "URLs de las imágenes separadas por coma", required = true)
+            @RequestParam String urlImagenes,
+
+            @Parameter(description = "Índice de la imagen principal (0-based)", example = "0")
+            @RequestParam(defaultValue = "0") int imagenPrincipal
+    ) {
+        List<String> urls = List.of(urlImagenes.split(","));
+
+        Map<String, Object> imagen1 = new HashMap<>();
+        imagen1.put("id", 1);
+        imagen1.put("url", urls.get(0));
+        imagen1.put("esPrincipal", imagenPrincipal == 0);
+        imagen1.put("orden", 1);
+
+        Map<String, Object> response = new HashMap<>();
+        response.put("message", "Imágenes subidas exitosamente");
+        response.put("totalImagenes", urls.size());
+        response.put("imagenes", List.of(imagen1));
+        response.put("imagenPrincipalEstablecida", imagenPrincipal == 0);
+
+        return ResponseEntity.status(201).body(response);
+    }
+}

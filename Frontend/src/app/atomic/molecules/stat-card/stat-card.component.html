@@ -1,0 +1,14 @@
+<div class="stat-card">
+  <div *ngIf="icon" class="stat-card__icon-container">
+    <svg class="stat-card__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+      <path [attr.d]="iconPath"/>
+    </svg>
+  </div>
+  
+  <div class="stat-card__content">
+    <div class="stat-card__value">
+      {{ formattedValue }}<span *ngIf="suffix" class="stat-card__suffix">{{ suffix }}</span>
+    </div>
+    <div class="stat-card__label">{{ label }}</div>
+  </div>
+</div>

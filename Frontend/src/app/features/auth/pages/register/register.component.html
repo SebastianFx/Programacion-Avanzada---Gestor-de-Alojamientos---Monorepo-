@@ -1,0 +1,23 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="header">
+      <h1 class="title">Crear Cuenta</h1>
+      <p class="subtitle">Únete a nuestra comunidad</p>
+    </div>
+
+    <app-register-form
+      [form]="registerForm"
+      [loading]="loading"
+      [errorMessage]="errorMessage"
+      [successMessage]="successMessage"
+      (submitForm)="onSubmit()">
+    </app-register-form>
+
+    <div class="login-link">
+      <span>¿Ya tienes cuenta?</span>
+      <a (click)="goToLogin()" class="link-primary">
+        Inicia sesión aquí
+      </a>
+    </div>
+  </div>
+</div>

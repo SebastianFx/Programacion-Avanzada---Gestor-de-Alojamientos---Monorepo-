@@ -1,7 +1,6 @@
 version: '3.8'
 
 services:
-<<<<<<< HEAD
   # --- Servicio de Base de Datos ---
   mysql:
     image: mysql:8.4.6
@@ -16,7 +15,7 @@ services:
       - "3307:3306" # Tu PC (host) -> Contenedor
     volumes:
       - mysql_data:/var/lib/mysql
-      # Ruta al script de inicio, relativa al archivo docker-compose
+      # Ruta al script de inicio, relativa al archivo docker-compose (Monorepo)
       - ./Backend/src/main/java/uniquindio/edu/co/Proyecto_Avanzada/infraestructura:/docker-entrypoint-initdb.d
     networks:
       - alojamientos-network
@@ -29,7 +28,7 @@ services:
   # --- Servicio de Backend ---
   backend:
     build:
-      # Le decimos que busque el Dockerfile en la carpeta ./Backend
+      # Le decimos que busque el Dockerfile en la carpeta ./Backend (Monorepo)
       context: ./Backend
       dockerfile: Dockerfile
     container_name: backend-alojamientos
@@ -63,7 +62,7 @@ services:
   # --- Servicio de Frontend ---
   frontend:
     build:
-      # Le decimos que busque el Dockerfile en la carpeta ./Frontend
+      # Le decimos que busque el Dockerfile en la carpeta ./Frontend (Monorepo)
       context: ./Frontend
       dockerfile: Dockerfile
     container_name: proyecto-avanzada-frontend
@@ -85,21 +84,3 @@ networks:
 volumes:
   mysql_data: # El volumen para persistir datos de la BD
     driver: local
-=======
-  frontend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    container_name: proyecto-avanzada-frontend
-    ports:
-      - '4200:80'
-    environment:
-      - NODE_ENV=production
-    networks:
-      - app-network
-    restart: unless-stopped
-
-networks:
-  app-network:
-    driver: bridge
->>>>>>> original-frontend/main

@@ -1,0 +1,111 @@
+<section class="stats-section">
+  <div class="stats-section__container">
+    <div class="stats-section__header">
+      <h2 class="stats-section__title">Nuestra Plataforma en Números</h2>
+      <p class="stats-section__subtitle">
+        Miles de usuarios confían en nosotros para encontrar su alojamiento perfecto
+      </p>
+    </div>
+
+    <!-- Loading State -->
+    <div *ngIf="isLoading" class="stats-section__loading">
+      <mat-spinner diameter="50"></mat-spinner>
+      <p>Cargando estadísticas...</p>
+    </div>
+
+    <!-- Error State -->
+    <div *ngIf="error && !isLoading" class="stats-section__error">
+      <mat-icon>error_outline</mat-icon>
+      <p>{{ error }}</p>
+      <button mat-button color="primary" (click)="retry()">
+        <mat-icon>refresh</mat-icon>
+        Reintentar
+      </button>
+    </div>
+
+    <!-- Dashboard Grid -->
+    <div *ngIf="!isLoading && !error" class="dashboard-grid">
+      <!-- Tarjetas de estadísticas rápidas -->
+      <div class="stats-cards">
+        <div class="stat-card stat-card--primary">
+          <div class="stat-card__icon-container">
+            <mat-icon class="stat-card__icon">people</mat-icon>
+          </div>
+          <div class="stat-card__content">
+            <p class="stat-card__value">{{ formatNumber(mockStatistics.totalUsuarios) }}</p>
+            <p class="stat-card__label">Usuarios Registrados</p>
+          </div>
+        </div>
+
+        <div class="stat-card stat-card--accent">
+          <div class="stat-card__icon-container">
+            <mat-icon class="stat-card__icon">home</mat-icon>
+          </div>
+          <div class="stat-card__content">
+            <p class="stat-card__value">{{ formatNumber(mockStatistics.totalAlojamientos) }}</p>
+            <p class="stat-card__label">Alojamientos Disponibles</p>
+          </div>
+        </div>
+
+        <div class="stat-card stat-card--success">
+          <div class="stat-card__icon-container">
+            <mat-icon class="stat-card__icon">check_circle</mat-icon>
+          </div>
+          <div class="stat-card__content">
+            <p class="stat-card__value">{{ formatNumber(mockStatistics.totalReservas) }}</p>
+            <p class="stat-card__label">Reservas Completadas</p>
+          </div>
+        </div>
+
+        <div class="stat-card stat-card--warn">
+          <div class="stat-card__icon-container">
+            <mat-icon class="stat-card__icon">location_city</mat-icon>
+          </div>
+          <div class="stat-card__content">
+            <p class="stat-card__value">{{ formatNumber(mockStatistics.totalCiudades) }}</p>
+            <p class="stat-card__label">Ciudades Disponibles</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráficos -->
+      <div class="charts-grid">
+        <!-- Gráfico Donut - Métricas Clave -->
+        <div class="chart-widget">
+          <div class="chart-widget__header">
+            <h3 class="chart-widget__title">
+              <mat-icon>donut_large</mat-icon>
+              Distribución de Métricas Clave
+            </h3>
+          </div>
+          <div class="chart-widget__content">
+            <canvas
+              baseChart
+              [data]="doughnutChartData"
+              [type]="doughnutChartType"
+              [options]="doughnutChartOptions">
+            </canvas>
+          </div>
+        </div>
+
+        <!-- Gráfico de Barras - Reservas por Mes -->
+        <div class="chart-widget">
+          <div class="chart-widget__header">
+            <h3 class="chart-widget__title">
+              <mat-icon>bar_chart</mat-icon>
+              Reservas por Mes (2025)
+            </h3>
+          </div>
+          <div class="chart-widget__content">
+            <canvas
+              baseChart
+              [data]="barChartData"
+              [type]="barChartType"
+              [options]="barChartOptions">
+            </canvas>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

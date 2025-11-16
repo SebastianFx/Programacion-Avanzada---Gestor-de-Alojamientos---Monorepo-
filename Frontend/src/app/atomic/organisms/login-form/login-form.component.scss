@@ -1,0 +1,80 @@
+.login-form {
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-family: 'Inter', sans-serif;
+}
+
+.alert {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1.5rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+
+  &-error {
+    background-color: #fef2f2;
+    color: #b22222;
+    border: 1px solid #fecaca;
+  }
+
+  &-success {
+    background-color: #f0fdf4;
+    color: #2e8b57;
+    border: 1px solid #bbf7d0;
+  }
+
+  &-info {
+    background-color: #eff6ff;
+    color: #4682b4;
+    border: 1px solid #bfdbfe;
+  }
+
+  &-warning {
+    background-color: #fffbeb;
+    color: #d2691e;
+    border: 1px solid #fde68a;
+  }
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 1rem;
+}
+
+.forgot-password-link {
+  background: none;
+  border: none;
+  color: #d9b777;
+  font-size: 0.875rem;
+  font-weight: 500;
+  font-family: 'Inter', sans-serif;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  transition: color 0.2s ease;
+
+  &:hover {
+    color: #bf9765;
+    text-decoration: underline;
+  }
+
+  &:focus {
+    outline: none;
+    color: #8b6914;
+  }
+
+  &:active {
+    color: #8b6914;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-form {
+    padding: 1.5rem;
+  }
+}

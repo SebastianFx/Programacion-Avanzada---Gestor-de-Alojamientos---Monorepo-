@@ -1,0 +1,7 @@
+<label
+  [for]="for"
+  [class]="'label label-' + size">
+  <ng-content></ng-content>
+  <span *ngIf="required" class="required-indicator">*</span>
+  <span *ngIf="optional" class="optional-indicator">(opcional)</span>
+</label>
