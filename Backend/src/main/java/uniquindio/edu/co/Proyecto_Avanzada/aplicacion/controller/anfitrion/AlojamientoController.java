@@ -249,7 +249,8 @@ public class AlojamientoController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Foto subida exitosamente"),
             @ApiResponse(responseCode = "400", description = "Formato de imagen inválido"),
-            @ApiResponse(responseCode = "404", description = "Alojamiento no encontrado")
+            @ApiResponse(responseCode = "404", description = "Alojamiento no encontrado"),
+            @ApiResponse(responseCode = "403", description = "No tienes permiso para subir fotos a este alojamiento")
     })
     public ResponseEntity<Map<String, Object>> subirFoto(
             @Parameter(description = "ID del alojamiento", required = true)
@@ -263,22 +264,31 @@ public class AlojamientoController {
     ) {
         Map<String, Object> response = new HashMap<>();
         try {
-            // Por ahora, simplemente guardamos la URL/base64 directamente
-            // En una implementación completa, aquí procesarías el archivo
+            // ID del anfitrión fijo para pruebas (debería venir del token JWT)
+            Long anfitrionId = 1L;
 
-            Map<String, Object> imagen = new HashMap<>();
-            imagen.put("id", id);
-            imagen.put("url", imagenUrl);
-            imagen.put("esPrincipal", esPrincipal);
-            imagen.put("mensaje", "Foto guardada correctamente");
+            // Guardar la imagen a través del servicio
+            AlojamientoDTO alojamientoActualizado = alojamientoService.guardarImagenPrincipal(id, imagenUrl, anfitrionId);
 
             response.put("success", true);
-            response.put("message", "Foto subida exitosamente");
-            response.put("imagen", imagen);
+            response.put("message", "Foto subida y guardada exitosamente");
+            response.put("alojamiento", alojamientoActualizado);
 
             return ResponseEntity.status(201).body(response);
 
         } catch (Exception e) {
+            // Manejo de errores específicos
+            if (e.getMessage().contains("No tienes permiso")) {
+                response.put("success", false);
+                response.put("error", e.getMessage());
+                return ResponseEntity.status(403).body(response);
+            }
+            if (e.getMessage().contains("no fue encontrado")) {
+                response.put("success", false);
+                response.put("error", e.getMessage());
+                return ResponseEntity.status(404).body(response);
+            }
+            // Error genérico
             response.put("success", false);
             response.put("error", "Error al subir la foto: " + e.getMessage());
             return ResponseEntity.status(400).body(response);

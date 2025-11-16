@@ -65,4 +65,15 @@ public interface AlojamientoService {
      */
     List<AlojamientoSummaryDTO> listarAlojamientos();
 
+    /**
+     * Guarda o actualiza la imagen principal de un alojamiento.
+     * Si ya existe una imagen principal, la desmarca y marca la nueva como principal.
+     * @param alojamientoId El ID del alojamiento.
+     * @param imagenUrl La URL o base64 de la imagen.
+     * @param anfitrionId El ID del anfitrión (para validar permisos).
+     * @return El DTO del alojamiento actualizado con la nueva imagen.
+     * @throws Exception Si el alojamiento no existe o el anfitrión no tiene permisos.
+     */
+    AlojamientoDTO guardarImagenPrincipal(Long alojamientoId, String imagenUrl, Long anfitrionId) throws Exception;
+
 }

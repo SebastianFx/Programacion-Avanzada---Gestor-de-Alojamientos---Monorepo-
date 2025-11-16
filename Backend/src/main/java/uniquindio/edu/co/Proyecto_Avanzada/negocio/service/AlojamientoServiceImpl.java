@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoCreateDTO;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoDTO;
 import uniquindio.edu.co.Proyecto_Avanzada.persistencia.entity.AlojamientoEntity;
+import uniquindio.edu.co.Proyecto_Avanzada.persistencia.entity.ImagenAlojamiento;
 import uniquindio.edu.co.Proyecto_Avanzada.persistencia.entity.UsuarioEntity;
 import uniquindio.edu.co.Proyecto_Avanzada.persistencia.mapper.AlojamientoMapper;
 import uniquindio.edu.co.Proyecto_Avanzada.persistencia.repository.AlojamientoRepository;
+import uniquindio.edu.co.Proyecto_Avanzada.persistencia.repository.ImagenAlojamientoRepository;
 import uniquindio.edu.co.Proyecto_Avanzada.persistencia.repository.UsuarioRepository;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoSummaryDTO;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoUpdateDTO;
@@ -21,6 +23,7 @@ import org.springframework.data.domain.Pageable;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.enums.EstadoAlojamiento;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlojamientoServiceImpl implements AlojamientoService {
@@ -36,6 +39,9 @@ public class AlojamientoServiceImpl implements AlojamientoService {
 
     @Autowired
     private ReservaRepository reservaRepository; //DAO de Reservas
+
+    @Autowired
+    private ImagenAlojamientoRepository imagenAlojamientoRepository; //DAO para Imágenes
 
     @Override
     public AlojamientoDTO crearAlojamiento(AlojamientoCreateDTO alojamientoCreateDTO, Long anfitrionId) throws Exception {
@@ -184,5 +190,46 @@ public class AlojamientoServiceImpl implements AlojamientoService {
 
         // Convertimos las entidades a DTOs resumidos para mostrar en tarjetas
         return alojamientoMapper.toSummaryDTOList(alojamientos);
+    }
+
+    @Override
+    public AlojamientoDTO guardarImagenPrincipal(Long alojamientoId, String imagenUrl, Long anfitrionId) throws Exception {
+        // 1. Buscar el alojamiento
+        AlojamientoEntity alojamiento = alojamientoRepository.findById(alojamientoId)
+                .orElseThrow(() -> new Exception("El alojamiento con ID " + alojamientoId + " no fue encontrado."));
+
+        // 2. Verificar que el anfitrión sea el dueño
+        if (!alojamiento.getAnfitrion().getId().equals(anfitrionId)) {
+            throw new Exception("No tienes permiso para modificar las imágenes de este alojamiento.");
+        }
+
+        // 3. Buscar si ya existe una imagen principal
+        Optional<ImagenAlojamiento> imagenPrincipalExistente =
+                imagenAlojamientoRepository.findByAlojamiento_IdAndEsPrincipalTrue(alojamientoId);
+
+        // 4. Si existe, desmarcarla como principal
+        if (imagenPrincipalExistente.isPresent()) {
+            ImagenAlojamiento imagenAntigua = imagenPrincipalExistente.get();
+            imagenAntigua.setEsPrincipal(false);
+            imagenAlojamientoRepository.save(imagenAntigua);
+        }
+
+        // 5. Crear la nueva imagen principal
+        ImagenAlojamiento nuevaImagen = ImagenAlojamiento.builder()
+                .alojamiento(alojamiento)
+                .urlImagen(imagenUrl)
+                .esPrincipal(true)
+                .orden(1)
+                .build();
+
+        // 6. Guardar la nueva imagen
+        imagenAlojamientoRepository.save(nuevaImagen);
+
+        // 7. Recargar el alojamiento con las imágenes actualizadas
+        AlojamientoEntity alojamientoActualizado = alojamientoRepository.findById(alojamientoId)
+                .orElseThrow(() -> new Exception("Error al recargar el alojamiento."));
+
+        // 8. Convertir a DTO y devolver
+        return alojamientoMapper.toDTO(alojamientoActualizado);
     }
 }

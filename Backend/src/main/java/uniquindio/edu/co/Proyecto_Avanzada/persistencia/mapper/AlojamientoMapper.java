@@ -61,9 +61,11 @@ public interface AlojamientoMapper {
      * MAPEOS PERSONALIZADOS:
      * - imagenPrincipal: Se extrae de la lista de imágenes (primera con esPrincipal=true)
      * - calificacionPromedio: Se calcula externamente en el servicio
+     * - totalReservas: Se calcula externamente en el servicio
      */
     @Mapping(target = "imagenPrincipal", source = "imagenes", qualifiedByName = "extractImagenPrincipal")
     @Mapping(target = "calificacionPromedio", ignore = true) // Se calcula en servicio
+    @Mapping(target = "totalReservas", ignore = true) // Se calcula en servicio
     AlojamientoSummaryDTO toSummaryDTO(AlojamientoEntity entity);
 
     /**
