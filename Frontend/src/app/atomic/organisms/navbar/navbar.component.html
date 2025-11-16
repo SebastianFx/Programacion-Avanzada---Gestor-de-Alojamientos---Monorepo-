@@ -29,8 +29,18 @@
         </button>
       }
 
-      <!-- Botón cuando está autenticado -->
+      <!-- Botones cuando está autenticado -->
       @if (currentUser$ | async; as user) {
+        <!-- Botón para anfitriones/administradores -->
+        @if (isHost()) {
+          <button class="navbar__button navbar__button--host" (click)="onPublishAccommodation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Publicar Alojamiento
+          </button>
+        }
         <button class="navbar__button navbar__button--logout" (click)="onLogout()">
           Cerrar Sesión
         </button>
@@ -80,8 +90,18 @@
         </button>
       }
 
-      <!-- Botón cuando está autenticado -->
+      <!-- Botones cuando está autenticado -->
       @if (currentUser$ | async; as user) {
+        <!-- Botón para anfitriones/administradores -->
+        @if (isHost()) {
+          <button class="navbar__mobile-button navbar__mobile-button--host" (click)="onPublishAccommodation()">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            Publicar Alojamiento
+          </button>
+        }
         <button class="navbar__mobile-button navbar__mobile-button--logout" (click)="onLogout()">
           Cerrar Sesión
         </button>

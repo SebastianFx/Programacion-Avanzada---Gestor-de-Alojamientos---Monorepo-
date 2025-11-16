@@ -80,12 +80,28 @@ export class AuthService {
    * Maneja la respuesta de autenticación
    */
   private handleAuthResponse(response: AuthResponse): void {
+    console.log('📥 AuthService - Respuesta de autenticación recibida:', {
+      hasToken: !!response.token,
+      user: response.user
+    });
+
     if (response.token) {
       localStorage.setItem('token', response.token);
+      console.log('💾 Token guardado en localStorage');
+
+      // Decodificar y mostrar el payload del token
+      try {
+        const payload = JSON.parse(atob(response.token.split('.')[1]));
+        console.log('🔐 Payload del token JWT:', payload);
+      } catch (error) {
+        console.error('Error al decodificar token:', error);
+      }
     }
+
     if (response.user) {
       localStorage.setItem('user', JSON.stringify(response.user));
       this.currentUserSubject.next(response.user);
+      console.log('👤 Usuario guardado:', response.user);
     }
   }
 
@@ -137,7 +153,13 @@ export class AuthService {
    */
   isHost(): boolean {
     const user = this.getCurrentUser();
-    return user?.rol === 'ANFITRION' || user?.rol === 'ADMINISTRADOR';
+    const result = user?.rol === 'ANFITRION' || user?.rol === 'ADMINISTRADOR';
+    console.log('🔍 AuthService.isHost() -', {
+      user: user?.email,
+      rol: user?.rol,
+      isHost: result
+    });
+    return result;
   }
 
   /**

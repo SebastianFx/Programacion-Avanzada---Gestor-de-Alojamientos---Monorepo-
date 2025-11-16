@@ -157,6 +157,26 @@
         box-shadow: vars.$shadow-md;
       }
     }
+
+    &--host {
+      background: vars.$gradient-primary;
+      color: vars.$color-white;
+      box-shadow: vars.$shadow-sm;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover {
+        background: vars.$gradient-gold;
+        transform: translateY(-2px);
+        box-shadow: vars.$shadow-md;
+      }
+    }
   }
 
   // Mobile Menu Toggle
@@ -284,6 +304,26 @@
       &:hover {
         background: #dc2626;
         color: vars.$color-white;
+        box-shadow: vars.$shadow-md;
+      }
+    }
+
+    &--host {
+      background: vars.$gradient-primary;
+      color: vars.$color-white;
+      box-shadow: vars.$shadow-sm;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+
+      svg {
+        width: 18px;
+        height: 18px;
+      }
+
+      &:hover {
+        background: vars.$gradient-gold;
         box-shadow: vars.$shadow-md;
       }
     }

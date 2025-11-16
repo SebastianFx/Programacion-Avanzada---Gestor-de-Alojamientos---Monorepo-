@@ -29,16 +29,27 @@ export class JwtInterceptor implements HttpInterceptor {
           Authorization: `Bearer ${token}`
         }
       });
+      console.log('🔑 JWT Interceptor - Token añadido a la petición:', request.url);
+      console.log('📋 Authorization Header:', `Bearer ${token.substring(0, 20)}...`);
+    } else {
+      console.warn('⚠️ JWT Interceptor - No hay token disponible para:', request.url);
     }
 
     // Manejar la petición y posibles errores
     return next.handle(request).pipe(
       catchError((error: HttpErrorResponse) => {
-        // Si recibimos un 401 (No autorizado), hacer logout
+        // Logs detallados de error
         if (error.status === 401) {
+          console.error('❌ Error 401 - No autorizado. Cerrando sesión...');
           this.authService.logout();
+        } else if (error.status === 403) {
+          console.error('❌ Error 403 - Acceso prohibido. Verificar permisos del usuario.');
+          console.error('URL solicitada:', request.url);
+          console.error('Detalles del error:', error);
+        } else {
+          console.error('❌ Error HTTP:', error.status, error.message);
         }
-        
+
         return throwError(() => error);
       })
     );

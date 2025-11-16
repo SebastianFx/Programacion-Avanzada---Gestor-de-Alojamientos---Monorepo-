@@ -54,4 +54,19 @@ export class NavbarComponent {
     this.authService.logout();
     this.closeMobileMenu();
   }
+
+  /**
+   * Verifica si el usuario actual es anfitrión o administrador
+   */
+  isHost(): boolean {
+    return this.authService.isHost();
+  }
+
+  /**
+   * Navega a la página de crear alojamiento
+   */
+  onPublishAccommodation(): void {
+    this.router.navigate(['/alojamientos/crear']);
+    this.closeMobileMenu();
+  }
 }
