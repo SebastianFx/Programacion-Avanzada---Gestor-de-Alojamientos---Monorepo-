@@ -1,0 +1,86 @@
+version: '3.8'
+
+services:
+  # --- Servicio de Base de Datos ---
+  mysql:
+    image: mysql:8.4.6
+    container_name: mysql-alojamientos
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: A-12345-RR
+      MYSQL_DATABASE: gestion_alojamientos
+      MYSQL_CHARACTER_SET_SERVER: utf8mb4
+      MYSQL_COLLATION_SERVER: utf8mb4_unicode_ci
+    ports:
+      - "3307:3306" # Tu PC (host) -> Contenedor
+    volumes:
+      - mysql_data:/var/lib/mysql
+      # Ruta al script de inicio, relativa al archivo docker-compose
+      - ./Backend/src/main/java/uniquindio/edu/co/Proyecto_Avanzada/infraestructura:/docker-entrypoint-initdb.d
+    networks:
+      - alojamientos-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-pA-12345-RR"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  # --- Servicio de Backend ---
+  backend:
+    build:
+      # Le decimos que busque el Dockerfile en la carpeta ./Backend
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: backend-alojamientos
+    restart: unless-stopped
+    depends_on:
+      mysql:
+        condition: service_healthy # No arranca hasta que mysql esté sano
+    environment:
+      SPRING_PROFILES_ACTIVE: dev
+      # ¡Importante! El backend se conecta a 'mysql' por su nombre de servicio
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/gestion_alojamientos?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: A-12345-RR
+      SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+      SPRING_JPA_HIBERNATE_DDL_AUTO: update
+      SPRING_JPA_SHOW_SQL: false
+      SPRING_JPA_PROPERTIES_HIBERNATE_DIALECT: org.hibernate.dialect.MySQLDialect
+      SERVER_PORT: 8080 # El puerto interno de Spring
+    ports:
+      - "8080:8080" # Tu PC (host) -> Contenedor
+    networks:
+      - alojamientos-network
+    healthcheck:
+      # Corregido: Apunta al puerto 8080 donde Spring está corriendo
+      test: ["CMD", "curl", "-f", "http://localhost:8080/alojamiento/actuator/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+  # --- Servicio de Frontend ---
+  frontend:
+    build:
+      # Le decimos que busque el Dockerfile en la carpeta ./Frontend
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: proyecto-avanzada-frontend
+    ports:
+      - "4200:80" # Tu PC (host) -> Contenedor (Nginx en puerto 80)
+    environment:
+      - NODE_ENV=production
+    networks:
+      - alojamientos-network
+    restart: unless-stopped
+    # Nota: El frontend no necesita 'depends_on'
+    # puede arrancar en paralelo al backend.
+
+# --- Definiciones de Red y Volumen ---
+networks:
+  alojamientos-network: # La red única que conecta todo
+    driver: bridge
+
+volumes:
+  mysql_data: # El volumen para persistir datos de la BD
+    driver: local
