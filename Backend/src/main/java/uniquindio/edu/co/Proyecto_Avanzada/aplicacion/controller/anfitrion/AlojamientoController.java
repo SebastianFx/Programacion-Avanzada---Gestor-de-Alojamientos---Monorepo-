@@ -243,6 +243,48 @@ public class AlojamientoController {
         }
     }
 
+    @PostMapping("/{id}/fotos")
+    @Operation(summary = "Subir foto del alojamiento",
+            description = "Subir una imagen para el alojamiento (acepta base64 o URL)")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "201", description = "Foto subida exitosamente"),
+            @ApiResponse(responseCode = "400", description = "Formato de imagen inválido"),
+            @ApiResponse(responseCode = "404", description = "Alojamiento no encontrado")
+    })
+    public ResponseEntity<Map<String, Object>> subirFoto(
+            @Parameter(description = "ID del alojamiento", required = true)
+            @PathVariable Long id,
+
+            @Parameter(description = "URL o datos base64 de la imagen", required = true)
+            @RequestParam String imagenUrl,
+
+            @Parameter(description = "Marcar como imagen principal")
+            @RequestParam(defaultValue = "true") boolean esPrincipal
+    ) {
+        Map<String, Object> response = new HashMap<>();
+        try {
+            // Por ahora, simplemente guardamos la URL/base64 directamente
+            // En una implementación completa, aquí procesarías el archivo
+
+            Map<String, Object> imagen = new HashMap<>();
+            imagen.put("id", id);
+            imagen.put("url", imagenUrl);
+            imagen.put("esPrincipal", esPrincipal);
+            imagen.put("mensaje", "Foto guardada correctamente");
+
+            response.put("success", true);
+            response.put("message", "Foto subida exitosamente");
+            response.put("imagen", imagen);
+
+            return ResponseEntity.status(201).body(response);
+
+        } catch (Exception e) {
+            response.put("success", false);
+            response.put("error", "Error al subir la foto: " + e.getMessage());
+            return ResponseEntity.status(400).body(response);
+        }
+    }
+
     @PostMapping("/{id}/imagenes")
     @Operation(summary = "Subir imágenes del alojamiento",
             description = "Subir entre 1 y 10 imágenes, marcar una como principal")

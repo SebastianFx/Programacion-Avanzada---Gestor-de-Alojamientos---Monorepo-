@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse, HttpParams } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, retry } from 'rxjs/operators';
 import { FeaturedAccommodation, ApiResponse } from '../models';
@@ -66,6 +66,22 @@ export class AccommodationService {
         }
         return response;
       }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
+   * Sube una foto para un alojamiento
+   *
+   * @param alojamientoId ID del alojamiento
+   * @param imagenBase64 Imagen en formato base64
+   * @returns Observable con la respuesta
+   */
+  subirFotoAlojamiento(alojamientoId: number, imagenBase64: string): Observable<any> {
+    const uploadUrl = `${environment.apiUrl}/alojamiento/api/anfitrion/alojamientos/${alojamientoId}/fotos`;
+    const params = new HttpParams().set('imagenUrl', imagenBase64).set('esPrincipal', 'true');
+
+    return this.http.post<any>(uploadUrl, null, { params }).pipe(
       catchError(this.handleError)
     );
   }

@@ -50,4 +50,13 @@
       <p>Mostrando {{ alojamientos().length }} alojamiento(s)</p>
     </div>
   }
+
+  <!-- Modal de Detalle -->
+  @if (selectedAccommodation()) {
+    <app-alojamiento-detail-modal
+      [alojamiento]="selectedAccommodation()!"
+      [isOpen]="isModalOpen()"
+      (close)="closeModal()"
+    />
+  }
 </div>

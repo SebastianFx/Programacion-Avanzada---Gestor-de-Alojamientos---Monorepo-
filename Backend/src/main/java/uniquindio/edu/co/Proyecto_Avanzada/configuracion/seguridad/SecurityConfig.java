@@ -50,13 +50,9 @@ public class SecurityConfig {
                         .requestMatchers("/api/public/**").permitAll()
                         .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
 
-                        // ========== TEMPORAL: ENDPOINT DE CREACIÓN ABIERTO PARA TESTING ==========
-                        // TODO: REVERTIR ESTO - Solo para diagnóstico
-                        .requestMatchers("/api/anfitrion/alojamientos").permitAll()
-
                         // ========== ENDPOINTS PROTEGIDOS ==========
                         .requestMatchers("/api/usuario/**").hasAnyRole("USUARIO", "ANFITRION", "ADMINISTRADOR")
-                        .requestMatchers("/api/anfitrion/**").hasRole("ANFITRION")
+                        .requestMatchers("/api/anfitrion/**").hasAnyRole("ANFITRION", "ADMINISTRADOR")
                         .requestMatchers("/api/admin/**").hasRole("ADMINISTRADOR")
                         .anyRequest().authenticated()
                 )

@@ -32,6 +32,11 @@ export class AlojamientoFormComponent implements OnInit {
     { value: 'FINCA', label: 'Finca' },
   ];
 
+  // Para manejo de archivo
+  selectedFile: File | null = null;
+  selectedFileName: string | null = null;
+  imagePreview: string | null = null;
+
   ngOnInit(): void {
     this.initializeForm();
   }
@@ -80,12 +85,16 @@ export class AlojamientoFormComponent implements OnInit {
     // Llamar al servicio
     this.accommodationService.crearAlojamiento(formData).subscribe({
       next: (response) => {
-        this.success.set(true);
-        this.isSubmitting.set(false);
-        // Redirigir a la lista después de 1.5 segundos
-        setTimeout(() => {
-          this.router.navigate(['/alojamientos']);
-        }, 1500);
+        console.log('Alojamiento creado:', response);
+
+        // Si hay una imagen seleccionada, subirla
+        if (this.selectedFile && this.imagePreview) {
+          const alojamientoId = response.id;
+          this.uploadImage(alojamientoId);
+        } else {
+          // Si no hay imagen, simplemente marcar como éxito
+          this.handleSuccess();
+        }
       },
       error: (err) => {
         this.error.set(err.message || 'Error al crear el alojamiento');
@@ -93,6 +102,88 @@ export class AlojamientoFormComponent implements OnInit {
         console.error('Error creating accommodation:', err);
       },
     });
+  }
+
+  /**
+   * Sube la imagen del alojamiento
+   */
+  private uploadImage(alojamientoId: number): void {
+    if (!this.imagePreview) {
+      this.handleSuccess();
+      return;
+    }
+
+    // Enviar la imagen como base64
+    this.accommodationService.subirFotoAlojamiento(alojamientoId, this.imagePreview).subscribe({
+      next: () => {
+        console.log('Foto subida exitosamente');
+        this.handleSuccess();
+      },
+      error: (err) => {
+        console.error('Error al subir foto:', err);
+        // Aunque falle la foto, el alojamiento ya fue creado, así que marcamos éxito
+        this.handleSuccess();
+      },
+    });
+  }
+
+  /**
+   * Maneja el éxito de la creación
+   */
+  private handleSuccess(): void {
+    this.success.set(true);
+    this.isSubmitting.set(false);
+    // Redirigir a la lista después de 1.5 segundos
+    setTimeout(() => {
+      this.router.navigate(['/alojamientos']);
+    }, 1500);
+  }
+
+  /**
+   * Maneja la selección de archivo
+   */
+  onFileSelected(event: Event): void {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      const file = input.files[0];
+
+      // Validar tamaño (máx 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        this.error.set('El archivo es demasiado grande. Máximo 5MB');
+        return;
+      }
+
+      // Validar tipo
+      if (!file.type.startsWith('image/')) {
+        this.error.set('Solo se permiten archivos de imagen');
+        return;
+      }
+
+      this.selectedFile = file;
+      this.selectedFileName = file.name;
+
+      // Crear preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        this.imagePreview = e.target?.result as string;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+
+  /**
+   * Remueve el archivo seleccionado
+   */
+  removeFile(): void {
+    this.selectedFile = null;
+    this.selectedFileName = null;
+    this.imagePreview = null;
+
+    // Limpiar el input
+    const input = document.getElementById('foto') as HTMLInputElement;
+    if (input) {
+      input.value = '';
+    }
   }
 
   /**

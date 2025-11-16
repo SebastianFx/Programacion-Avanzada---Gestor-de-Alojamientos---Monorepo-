@@ -1,6 +1,7 @@
 /**
  * Interfaz para alojamiento destacado
  * Coincide con FeaturedAccommodationDTO del backend
+ * Incluye campos opcionales para vistas detalladas
  */
 export interface FeaturedAccommodation {
   id: number;
@@ -10,6 +11,17 @@ export interface FeaturedAccommodation {
   imagenPrincipal: string;
   calificacionPromedio?: number;
   destacado: boolean;
+
+  // Campos opcionales para vista detallada
+  descripcion?: string;
+  capacidadMaxima?: number;
+  tipo?: string;
+  servicios?: string[];
+  direccionCompleta?: string;
+  estado?: string;
+  anfitrionNombre?: string;
+  totalReservas?: number;
+  totalComentarios?: number;
 }
 
 /**

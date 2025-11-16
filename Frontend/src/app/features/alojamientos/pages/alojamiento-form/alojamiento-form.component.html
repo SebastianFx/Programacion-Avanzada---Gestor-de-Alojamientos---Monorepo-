@@ -183,6 +183,36 @@
         </div>
       </section>
 
+      <!-- Foto Principal -->
+      <section class="form-section">
+        <h2 class="section-title">Foto Principal (Opcional)</h2>
+
+        <div class="form-group">
+          <label for="foto" class="form-label">Foto del Alojamiento</label>
+          <input
+            type="file"
+            id="foto"
+            class="form-input-file"
+            accept="image/*"
+            (change)="onFileSelected($event)"
+          />
+          <small class="form-help">Formatos aceptados: JPG, PNG, GIF. Máximo 5MB</small>
+
+          @if (selectedFileName) {
+            <div class="file-preview">
+              <span class="file-name">📁 {{ selectedFileName }}</span>
+              <button type="button" class="btn-remove-file" (click)="removeFile()">✕</button>
+            </div>
+          }
+
+          @if (imagePreview) {
+            <div class="image-preview">
+              <img [src]="imagePreview" alt="Preview" />
+            </div>
+          }
+        </div>
+      </section>
+
       <!-- Form Actions -->
       <div class="form-actions">
         <button
