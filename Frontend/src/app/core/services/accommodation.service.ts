@@ -52,6 +52,25 @@ export class AccommodationService {
   }
 
   /**
+   * Crea un nuevo alojamiento
+   *
+   * @param data Datos del alojamiento a crear
+   * @returns Observable con el alojamiento creado
+   */
+  crearAlojamiento(data: any): Observable<any> {
+    const createUrl = `${environment.apiUrl}/alojamiento/api/anfitrion/alojamientos`;
+    return this.http.post<any>(createUrl, data).pipe(
+      map((response) => {
+        if (response.alojamiento) {
+          return response.alojamiento;
+        }
+        return response;
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
    * Manejo centralizado de errores HTTP
    * @param error Error HTTP
    */

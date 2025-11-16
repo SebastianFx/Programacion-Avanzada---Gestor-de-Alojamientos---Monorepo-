@@ -1,0 +1,211 @@
+<div class="form-container">
+  <!-- Header Section -->
+  <header class="form-header">
+    <h1 class="form-title">Crear Nuevo Alojamiento</h1>
+    <p class="form-subtitle">Complete la información para publicar su alojamiento</p>
+  </header>
+
+  <!-- Success Message -->
+  @if (success()) {
+    <div class="success-message">
+      <div class="success-icon">✓</div>
+      <h2>¡Alojamiento creado exitosamente!</h2>
+      <p>Redirigiendo a la lista de alojamientos...</p>
+    </div>
+  }
+
+  <!-- Form -->
+  @if (!success()) {
+    <form [formGroup]="alojamientoForm" (ngSubmit)="onSubmit()" class="alojamiento-form">
+      <!-- Error Message -->
+      @if (error()) {
+        <div class="error-alert">
+          <span class="error-icon">⚠️</span>
+          <p>{{ error() }}</p>
+        </div>
+      }
+
+      <!-- Información Básica -->
+      <section class="form-section">
+        <h2 class="section-title">Información Básica</h2>
+
+        <div class="form-group">
+          <label for="titulo" class="form-label">Título del Alojamiento *</label>
+          <input
+            type="text"
+            id="titulo"
+            formControlName="titulo"
+            class="form-input"
+            [class.form-input--error]="isFieldInvalid('titulo')"
+            placeholder="Ej: Casa Campestre La Calera"
+          />
+          @if (hasError('titulo', 'required')) {
+            <span class="error-message">El título es obligatorio</span>
+          }
+          @if (hasError('titulo', 'maxlength')) {
+            <span class="error-message">El título no puede exceder 200 caracteres</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="descripcion" class="form-label">Descripción *</label>
+          <textarea
+            id="descripcion"
+            formControlName="descripcion"
+            class="form-textarea"
+            [class.form-input--error]="isFieldInvalid('descripcion')"
+            placeholder="Describa su alojamiento..."
+            rows="5"
+          ></textarea>
+          @if (hasError('descripcion', 'required')) {
+            <span class="error-message">La descripción es obligatoria</span>
+          }
+          @if (hasError('descripcion', 'maxlength')) {
+            <span class="error-message">La descripción no puede exceder 2000 caracteres</span>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="tipo" class="form-label">Tipo de Alojamiento *</label>
+          <select
+            id="tipo"
+            formControlName="tipo"
+            class="form-select"
+            [class.form-input--error]="isFieldInvalid('tipo')"
+          >
+            <option value="">Seleccione un tipo</option>
+            @for (tipo of tiposAlojamiento; track tipo.value) {
+              <option [value]="tipo.value">{{ tipo.label }}</option>
+            }
+          </select>
+          @if (hasError('tipo', 'required')) {
+            <span class="error-message">Debe seleccionar un tipo de alojamiento</span>
+          }
+        </div>
+      </section>
+
+      <!-- Ubicación -->
+      <section class="form-section">
+        <h2 class="section-title">Ubicación</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="ciudad" class="form-label">Ciudad *</label>
+            <input
+              type="text"
+              id="ciudad"
+              formControlName="ciudad"
+              class="form-input"
+              [class.form-input--error]="isFieldInvalid('ciudad')"
+              placeholder="Ej: La Calera"
+            />
+            @if (hasError('ciudad', 'required')) {
+              <span class="error-message">La ciudad es obligatoria</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="direccionCompleta" class="form-label">Dirección Completa *</label>
+            <input
+              type="text"
+              id="direccionCompleta"
+              formControlName="direccionCompleta"
+              class="form-input"
+              [class.form-input--error]="isFieldInvalid('direccionCompleta')"
+              placeholder="Ej: Vereda Alto del Águila, Km 2"
+            />
+            @if (hasError('direccionCompleta', 'required')) {
+              <span class="error-message">La dirección es obligatoria</span>
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Detalles -->
+      <section class="form-section">
+        <h2 class="section-title">Detalles del Alojamiento</h2>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label for="precioPorNoche" class="form-label">Precio por Noche (COP) *</label>
+            <input
+              type="number"
+              id="precioPorNoche"
+              formControlName="precioPorNoche"
+              class="form-input"
+              [class.form-input--error]="isFieldInvalid('precioPorNoche')"
+              placeholder="150000"
+              min="1"
+            />
+            @if (hasError('precioPorNoche', 'required')) {
+              <span class="error-message">El precio es obligatorio</span>
+            }
+            @if (hasError('precioPorNoche', 'min')) {
+              <span class="error-message">El precio debe ser mayor a 0</span>
+            }
+          </div>
+
+          <div class="form-group">
+            <label for="capacidadMaxima" class="form-label">Capacidad Máxima *</label>
+            <input
+              type="number"
+              id="capacidadMaxima"
+              formControlName="capacidadMaxima"
+              class="form-input"
+              [class.form-input--error]="isFieldInvalid('capacidadMaxima')"
+              placeholder="6"
+              min="1"
+            />
+            @if (hasError('capacidadMaxima', 'required')) {
+              <span class="error-message">La capacidad es obligatoria</span>
+            }
+            @if (hasError('capacidadMaxima', 'min')) {
+              <span class="error-message">La capacidad debe ser mayor a 0</span>
+            }
+          </div>
+        </div>
+      </section>
+
+      <!-- Servicios -->
+      <section class="form-section">
+        <h2 class="section-title">Servicios (Opcional)</h2>
+
+        <div class="form-group">
+          <label for="servicios" class="form-label">Servicios Disponibles</label>
+          <input
+            type="text"
+            id="servicios"
+            formControlName="servicios"
+            class="form-input"
+            placeholder="WiFi, Piscina, Parqueadero (separados por coma)"
+          />
+          <small class="form-help">Separe los servicios con comas. Ej: WiFi, Piscina, Parqueadero</small>
+        </div>
+      </section>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button
+          type="button"
+          class="btn btn--secondary"
+          (click)="onCancel()"
+          [disabled]="isSubmitting()"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          class="btn btn--primary"
+          [disabled]="isSubmitting()"
+        >
+          @if (isSubmitting()) {
+            <span class="spinner"></span>
+            Creando...
+          } @else {
+            Crear Alojamiento
+          }
+        </button>
+      </div>
+    </form>
+  }
+</div>
