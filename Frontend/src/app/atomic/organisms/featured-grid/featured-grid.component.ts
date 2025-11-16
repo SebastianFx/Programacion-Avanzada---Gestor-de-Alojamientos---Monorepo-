@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { FeaturedAccommodation } from '../../../core/models';
 import { AccommodationCardComponent } from '../../molecules/accommodation-card/accommodation-card.component';
+import { AlojamientoDetailModalComponent } from '../../../features/alojamientos/components/alojamiento-detail-modal/alojamiento-detail-modal.component';
 
 @Component({
   selector: 'app-featured-grid',
@@ -18,6 +19,7 @@ import { AccommodationCardComponent } from '../../molecules/accommodation-card/a
     MatButtonModule,
     MatProgressSpinnerModule,
     AccommodationCardComponent,
+    AlojamientoDetailModalComponent,
   ],
 })
 export class FeaturedGridComponent implements OnInit, OnDestroy {
@@ -28,6 +30,10 @@ export class FeaturedGridComponent implements OnInit, OnDestroy {
   error: string | null = null;
   canScrollLeft = false;
   canScrollRight = true;
+
+  // Estados para el modal
+  selectedAccommodation: FeaturedAccommodation | null = null;
+  isModalOpen = false;
 
   private destroy$ = new Subject<void>();
 
@@ -97,37 +103,37 @@ export class FeaturedGridComponent implements OnInit, OnDestroy {
 
   /**
    * Maneja el click en un alojamiento
-   * Redirige a registro si no está autenticado (HU-V002)
+   * Abre el modal de detalle
    */
   onAccommodationClick(accommodationId: number): void {
-    // Verificar si hay token de autenticación
-    const token = localStorage.getItem('auth_token');
-
-    if (token) {
-      // Usuario autenticado: ir a detalle del alojamiento
-      this.router.navigate(['/accommodations', accommodationId]);
-    } else {
-      // Usuario NO autenticado: redirigir a registro con returnUrl
-      this.router.navigate(['/auth/register'], {
-        queryParams: { returnUrl: `/accommodations/${accommodationId}` },
-      });
+    const accommodation = this.accommodations.find((a) => a.id === accommodationId);
+    if (accommodation) {
+      this.openModal(accommodation);
     }
   }
 
   /**
    * Maneja el click en "Ver todos"
-   * Redirige a registro si no está autenticado
+   * Navega a la página de listado completo de alojamientos
    */
   onViewAllClick(): void {
-    const token = localStorage.getItem('auth_token');
+    this.router.navigate(['/alojamientos']);
+  }
 
-    if (token) {
-      this.router.navigate(['/accommodations']);
-    } else {
-      this.router.navigate(['/auth/register'], {
-        queryParams: { returnUrl: '/accommodations' },
-      });
-    }
+  /**
+   * Abre el modal de detalle con el alojamiento seleccionado
+   */
+  openModal(accommodation: FeaturedAccommodation): void {
+    this.selectedAccommodation = accommodation;
+    this.isModalOpen = true;
+  }
+
+  /**
+   * Cierra el modal de detalle
+   */
+  closeModal(): void {
+    this.isModalOpen = false;
+    this.selectedAccommodation = null;
   }
 
   /**

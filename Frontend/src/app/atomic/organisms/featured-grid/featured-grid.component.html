@@ -75,4 +75,12 @@
       </button>
     </div>
   </div>
+
+  <!-- Modal de Detalle -->
+  <app-alojamiento-detail-modal
+    *ngIf="selectedAccommodation"
+    [alojamiento]="selectedAccommodation"
+    [isOpen]="isModalOpen"
+    (close)="closeModal()">
+  </app-alojamiento-detail-modal>
 </section>

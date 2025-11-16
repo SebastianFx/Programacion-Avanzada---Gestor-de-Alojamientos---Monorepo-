@@ -222,14 +222,19 @@ public class AlojamientoServiceImpl implements AlojamientoService {
                 .orden(1)
                 .build();
 
-        // 6. Guardar la nueva imagen
+        // 6. Guardar la nueva imagen en la tabla imagenes_alojamiento
         imagenAlojamientoRepository.save(nuevaImagen);
 
-        // 7. Recargar el alojamiento con las imágenes actualizadas
+        // 7. CRÍTICO: Actualizar el campo imagenPrincipal directamente en el Alojamiento
+        //    Esto garantiza que la URL esté disponible sin necesidad de JOIN
+        alojamiento.setImagenPrincipal(imagenUrl);
+        alojamientoRepository.save(alojamiento);
+
+        // 8. Recargar el alojamiento con las imágenes actualizadas
         AlojamientoEntity alojamientoActualizado = alojamientoRepository.findById(alojamientoId)
                 .orElseThrow(() -> new Exception("Error al recargar el alojamiento."));
 
-        // 8. Convertir a DTO y devolver
+        // 9. Convertir a DTO y devolver
         return alojamientoMapper.toDTO(alojamientoActualizado);
     }
 }

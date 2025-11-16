@@ -59,6 +59,9 @@ public class AlojamientoEntity {
     @Column(columnDefinition = "JSON")
     private List<String> servicios;
 
+    @Column(name = "imagen_principal", length = 500)
+    private String imagenPrincipal;
+
     @Enumerated(EnumType.STRING)
     @Builder.Default
     private EstadoAlojamiento estado = EstadoAlojamiento.ACTIVO;
