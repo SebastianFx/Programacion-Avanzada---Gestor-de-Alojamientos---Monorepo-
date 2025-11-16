@@ -59,4 +59,10 @@ public interface AlojamientoService {
 
     List<AlojamientoSummaryDTO> buscarAlojamientosDisponibles(BusquedaAlojamientosDTO filtros);
 
+    /**
+     * Lista todos los alojamientos activos disponibles públicamente.
+     * @return Una lista con la información resumida de todos los alojamientos activos.
+     */
+    List<AlojamientoSummaryDTO> listarAlojamientos();
+
 }

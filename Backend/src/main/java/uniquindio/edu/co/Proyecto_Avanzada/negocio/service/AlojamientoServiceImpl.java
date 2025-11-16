@@ -176,4 +176,13 @@ public class AlojamientoServiceImpl implements AlojamientoService {
         ).getContent();
         return alojamientoMapper.toSummaryDTOList(alojamientos);
     }
+
+    @Override
+    public List<AlojamientoSummaryDTO> listarAlojamientos() {
+        // Obtenemos todos los alojamientos que están activos (no eliminados ni inactivos)
+        List<AlojamientoEntity> alojamientos = alojamientoRepository.findByEstado(EstadoAlojamiento.ACTIVO);
+
+        // Convertimos las entidades a DTOs resumidos para mostrar en tarjetas
+        return alojamientoMapper.toSummaryDTOList(alojamientos);
+    }
 }

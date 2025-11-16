@@ -9,9 +9,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Alojamiento.AlojamientoSummaryDTO;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Public.CityDTO;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Public.FeaturedAccommodationDTO;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.dto.dtos_Public.StatisticsDTO;
+import uniquindio.edu.co.Proyecto_Avanzada.negocio.service.AlojamientoService;
 import uniquindio.edu.co.Proyecto_Avanzada.negocio.service.PublicService;
 
 import java.util.HashMap;
@@ -29,6 +31,7 @@ import java.util.Map;
 public class PublicController {
 
     private final PublicService publicService;
+    private final AlojamientoService alojamientoService;
 
     /**
      * HU-V002: Obtener alojamientos destacados para la landing page
@@ -121,6 +124,39 @@ public class PublicController {
             Map<String, Object> errorResponse = new HashMap<>();
             errorResponse.put("success", false);
             errorResponse.put("error", "Error al obtener ciudades");
+            errorResponse.put("message", e.getMessage());
+            return ResponseEntity.internalServerError().body(errorResponse);
+        }
+    }
+
+    /**
+     * Listar todos los alojamientos activos disponibles
+     * Endpoint público para mostrar catálogo completo de alojamientos
+     */
+    @GetMapping("/alojamientos")
+    @Operation(
+            summary = "Listar todos los alojamientos activos",
+            description = "Retorna lista completa de alojamientos activos disponibles para reservar"
+    )
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Alojamientos obtenidos exitosamente"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    public ResponseEntity<?> listarAlojamientos() {
+        try {
+            List<AlojamientoSummaryDTO> alojamientos = alojamientoService.listarAlojamientos();
+
+            Map<String, Object> response = new HashMap<>();
+            response.put("success", true);
+            response.put("data", alojamientos);
+            response.put("total", alojamientos.size());
+
+            return ResponseEntity.ok(response);
+
+        } catch (Exception e) {
+            Map<String, Object> errorResponse = new HashMap<>();
+            errorResponse.put("success", false);
+            errorResponse.put("error", "Error al listar alojamientos");
             errorResponse.put("message", e.getMessage());
             return ResponseEntity.internalServerError().body(errorResponse);
         }

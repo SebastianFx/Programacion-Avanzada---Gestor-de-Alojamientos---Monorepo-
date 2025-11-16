@@ -30,6 +30,11 @@ import uniquindio.edu.co.Proyecto_Avanzada.negocio.enums.EstadoAlojamiento;
 public interface AlojamientoRepository extends JpaRepository<AlojamientoEntity, Long> {
 
     /**
+     * Buscar alojamientos por estado
+     */
+    List<AlojamientoEntity> findByEstado(EstadoAlojamiento estado);
+
+    /**
      * Buscar alojamientos por anfitrión
      */
     List<AlojamientoEntity> findByAnfitrion_Id(Long anfitrionId);
