@@ -1,0 +1,53 @@
+<div class="alojamientos-container">
+  <!-- Header Section -->
+  <header class="alojamientos-header">
+    <h1 class="page-title">Todos los Alojamientos</h1>
+    <p class="page-subtitle">Descubre los mejores lugares para tu próxima estadía</p>
+  </header>
+
+  <!-- Loading State -->
+  @if (isLoading()) {
+    <div class="loading-state">
+      <div class="spinner"></div>
+      <p>Cargando alojamientos...</p>
+    </div>
+  }
+
+  <!-- Error State -->
+  @else if (error()) {
+    <div class="error-state">
+      <div class="error-icon">⚠️</div>
+      <h2>Oops! Algo salió mal</h2>
+      <p>{{ error() }}</p>
+      <button class="btn-retry" (click)="retry()">
+        Reintentar
+      </button>
+    </div>
+  }
+
+  <!-- Empty State -->
+  @else if (alojamientos().length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">🏠</div>
+      <h2>No hay alojamientos disponibles</h2>
+      <p>Vuelve más tarde para ver nuevas opciones</p>
+    </div>
+  }
+
+  <!-- Alojamientos Grid -->
+  @else {
+    <div class="alojamientos-grid">
+      @for (alojamiento of alojamientos(); track alojamiento.id) {
+        <app-accommodation-card
+          [accommodation]="alojamiento"
+          (cardClick)="onCardClick(alojamiento.id)"
+        />
+      }
+    </div>
+
+    <!-- Results Summary -->
+    <div class="results-summary">
+      <p>Mostrando {{ alojamientos().length }} alojamiento(s)</p>
+    </div>
+  }
+</div>

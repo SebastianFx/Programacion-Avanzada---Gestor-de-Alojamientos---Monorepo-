@@ -34,6 +34,24 @@ export class AccommodationService {
   }
 
   /**
+   * Obtiene todos los alojamientos disponibles
+   *
+   * @returns Observable con array de todos los alojamientos
+   */
+  getAlojamientos(): Observable<FeaturedAccommodation[]> {
+    return this.http.get<ApiResponse<FeaturedAccommodation[]>>(`${this.apiUrl}`).pipe(
+      retry(2),
+      map((response) => {
+        if (response.success && response.data) {
+          return response.data;
+        }
+        return [];
+      }),
+      catchError(this.handleError)
+    );
+  }
+
+  /**
    * Manejo centralizado de errores HTTP
    * @param error Error HTTP
    */

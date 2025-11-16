@@ -16,6 +16,11 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./features/auth/auth.module').then((m) => m.AuthModule),
   },
+  {
+    path: 'alojamientos',
+    loadChildren: () =>
+      import('./features/alojamientos/alojamientos.module').then((m) => m.AlojamientosModule),
+  },
   // Descomentar cuando dashboard esté listo:
   //{
   //  path: 'dashboard',
