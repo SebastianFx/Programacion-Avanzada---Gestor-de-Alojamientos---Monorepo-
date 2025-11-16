@@ -4,6 +4,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AuthService } from './services/auth.service';
 import { AuthGuard } from './guards/auth.guard';
+import { HostGuard } from './guards/host.guard';
 import { JwtInterceptor } from './interceptors/jwt.interceptor';
 
 @NgModule({
@@ -15,6 +16,7 @@ import { JwtInterceptor } from './interceptors/jwt.interceptor';
   providers: [
     AuthService,
     AuthGuard,
+    HostGuard, // Guard para proteger rutas de anfitriones
     {
       provide: HTTP_INTERCEPTORS,
       useClass: JwtInterceptor,

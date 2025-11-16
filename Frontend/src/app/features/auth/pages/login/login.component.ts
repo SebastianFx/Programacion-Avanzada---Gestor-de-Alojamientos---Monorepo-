@@ -45,13 +45,20 @@ export class LoginComponent implements OnInit {
     this.authService.login(email, password).subscribe({
       next: (response) => {
         this.loading = false;
-        // Redirigir al dashboard o página principal
-        this.router.navigate(['/dashboard']);
+        console.log('✅ Login exitoso:', response);
+
+        // Redirigir según el rol del usuario
+        const user = this.authService.getCurrentUser();
+        if (user?.rol === 'ANFITRION' || user?.rol === 'ADMINISTRADOR') {
+          this.router.navigate(['/alojamientos']);
+        } else {
+          this.router.navigate(['/home']);
+        }
       },
       error: (error) => {
         this.loading = false;
-        console.error('Error en login:', error);
-        
+        console.error('❌ Error en login:', error);
+
         if (error.status === 401) {
           this.errorMessage = 'Credenciales inválidas. Verifica tu email y contraseña.';
         } else if (error.status === 0) {
