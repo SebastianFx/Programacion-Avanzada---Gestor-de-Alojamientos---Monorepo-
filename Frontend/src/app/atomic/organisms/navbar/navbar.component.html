@@ -12,7 +12,7 @@
     <!-- Navigation Links (Desktop) -->
     <div class="navbar__links">
       <a class="navbar__link" (click)="navigateTo('/home')">Inicio</a>
-      <a class="navbar__link" (click)="navigateTo('/accommodations')">Alojamientos</a>
+      <a class="navbar__link" routerLink="/alojamientos">Alojamientos</a>
       <a class="navbar__link" (click)="navigateTo('/about')">Nosotros</a>
       <a class="navbar__link" (click)="navigateTo('/contact')">Contacto</a>
     </div>
@@ -64,7 +64,7 @@
   <div class="navbar__mobile-menu" [class.navbar__mobile-menu--open]="isMobileMenuOpen">
     <div class="navbar__mobile-links">
       <a class="navbar__mobile-link" (click)="navigateTo('/home')">Inicio</a>
-      <a class="navbar__mobile-link" (click)="navigateTo('/accommodations')">Alojamientos</a>
+      <a class="navbar__mobile-link" routerLink="/alojamientos">Alojamientos</a>
       <a class="navbar__mobile-link" (click)="navigateTo('/about')">Nosotros</a>
       <a class="navbar__mobile-link" (click)="navigateTo('/contact')">Contacto</a>
     </div>
