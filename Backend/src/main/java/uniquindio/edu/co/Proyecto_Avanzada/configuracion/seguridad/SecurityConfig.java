@@ -48,7 +48,10 @@ public class SecurityConfig {
                         // ========== ENDPOINTS PÚBLICOS (NO REQUIEREN AUTENTICACIÓN) ==========
                         .requestMatchers("/api/auth/**").permitAll()
                         .requestMatchers("/api/public/**").permitAll()
-                        .requestMatchers("/swagger-ui/**", "/v3/api-docs/**").permitAll()
+                        // Swagger/OpenAPI endpoints
+                        .requestMatchers("/swagger-ui/**", "/swagger-ui.html").permitAll()
+                        .requestMatchers("/v3/api-docs/**", "/api-docs/**").permitAll()
+                        .requestMatchers("/swagger-resources/**", "/webjars/**").permitAll()
 
                         // ========== ENDPOINTS PROTEGIDOS ==========
                         .requestMatchers("/api/usuario/**").hasAnyRole("USUARIO", "ANFITRION", "ADMINISTRADOR")
